@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Budget</title>
+		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	</head>
+
+	<body>
+		<div class='container-fluid' id='wrapper'>
+			<h3 id='title'>{{ title }}</h3>
+			{% block body %}{% endblock %}
+		</div>
+	</body>
+</html>

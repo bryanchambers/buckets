@@ -1,0 +1,161 @@
+body {
+    background: #f2f2f2;
+    font-family: monospace;
+}
+
+#wrapper {
+    padding-bottom: 300px;
+}
+
+#title {
+    text-align: center;
+    padding: 50px;
+    color: #333333;
+    font-size: 90px;
+}
+
+.bucket {
+    position: relative;
+    height: 150px;
+    border: 5px solid #8c8c8c;
+    margin: 5px;
+    margin-bottom: 50px;
+    background:#f2f2f2;
+    border-radius: 15px;
+}
+
+.bucket-fill {
+    background: repeating-linear-gradient(45deg, #becaf4, #becaf4 20px, #a8b9f0 20px, #a8b9f0 40px);
+}
+
+
+.bucket-label {
+    position: absolute;
+    height: 100%;
+    line-height: 148px;
+    font-size: 60px;
+    color: #333333;
+}
+
+.bucket-name {
+    left: 0px;
+    padding-left: 25px;
+}
+
+.bucket-balance {
+    right: 0px;
+    padding-right:25px;
+}
+
+.form-custom {
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 100px;
+}
+
+
+.btn-custom {
+    margin: 0;
+    padding: 0;
+    min-width: 33%;
+    height: 150px;
+    line-height: 148px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background: none;
+    color: #1fad66;
+    font-size: 60px;
+    font-weight: bold;
+    border: 2px solid #f2f2f2;
+}
+
+
+
+.btn-spend {
+    font-size: 60px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background: #a8f0a8;
+    color: #1fad66;
+    font-weight: bold;
+    border-radius: 0 15px 15px 0;
+}
+
+
+
+.input-border {
+    border: 5px solid #b3b3b3 !important;
+    border-radius: 15px !important;
+}
+
+
+
+.input-custom {
+    height: 150px;
+    font-size: 80px !important;
+    padding: 0;
+    padding-top: 5px;
+    width: 100%;
+    background:#f2f2f2;
+    margin-bottom: 100px;
+    text-align: center;
+    border: none;
+    border-radius: 15px;
+    color: #1f42ad;
+}
+
+
+
+.input-label {
+    font-size: 45px;
+    font-weight: bold;
+    margin-left: 10px;
+    color: #b3b3b3;
+}
+
+
+@media (min-width: 768px) {}
+
+
+@media (min-width: 992px) {
+    #wrapper {
+        width: 500px;
+    }
+
+    #title {
+        padding: 30px;
+        font-size: 35px;
+    }
+
+    .bucket {
+        height: 50px;
+        margin-bottom: 25px;
+        border: 2px solid #8c8c8c;
+        border-radius: 5px;
+    }
+
+    .bucket-fill {
+        background: repeating-linear-gradient(45deg, #becaf4, #becaf4 7px, #a8b9f0 7px, #a8b9f0 14px);
+    }
+
+    .bucket-label {
+        line-height: 48px;
+        font-size: 18px;
+    }
+
+    .bucket-name {
+        padding-left: 10px;
+    }
+    
+    .bucket-balance {
+        padding-right:10px;
+    }
+
+    .button {
+        height: 50px;
+        line-height: 48px;
+        font-size: 16px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

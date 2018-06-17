@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+	<form action='' method='post' class='form form-custom'>
+		<div class='form-group'>
+			<label class='input-label'></label>
+			
+			<div class='input-group input-border'>
+				<input name='amount' type='number' class='form-control input-custom' step='1'>
+				
+				<div class='input-group-append'>
+					<button name='submit' type='submit' class='btn btn-spend'>Spend</button>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div class='text-center'>
+		<a class='btn btn-custom' href='{{ bucket.id }}/edit'>Edit</a>
+		<a class='btn btn-custom' href='{{ bucket.id }}/delete'>Delete</a>
+	</div>	
+{% endblock %}
