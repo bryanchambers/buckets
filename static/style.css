@@ -84,7 +84,7 @@ body {
 
 
 .input-border {
-    border: 5px solid #b3b3b3 !important;
+    border: 5px solid #cccccc !important;
     border-radius: 15px !important;
 }
 
@@ -101,7 +101,7 @@ body {
     text-align: center;
     border: none;
     border-radius: 15px;
-    color: #1f42ad;
+    color: #4770eb;
 }
 
 
@@ -110,7 +110,7 @@ body {
     font-size: 45px;
     font-weight: bold;
     margin-left: 10px;
-    color: #b3b3b3;
+    color: #a6a6a6;
 }
 
 

@@ -1,1 +1,1 @@
-CREATE TABLE bucket(id INTEGER PRIMARY KEY, name TEXT, balance REAL, size INTEGER);
+CREATE TABLE bucket(id INTEGER PRIMARY KEY, name TEXT, balance REAL, refill INTEGER, size INTEGER);

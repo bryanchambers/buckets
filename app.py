@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.debug = True
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////var/www/html/buckets/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////var/www/buckets/database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -17,6 +17,7 @@ class Bucket(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(100))
 	balance = db.Column(db.Float)
+	refill = db.Column(db.Integer)
 	size = db.Column(db.Integer)
 
 
@@ -69,8 +70,10 @@ def edit(id):
 	if 'submit' in request.form:
 		name = request.form['name']
 		size = int(request.form['size'])
+		refill = int(request.form['refill'])
 		bucket.name = name
 		bucket.size = size
+		bucket.refill = refill
 		db.session.commit()
 		return redirect('/buckets/' + str(bucket.id))
 	return render_template('edit-bucket.html', bucket=bucket, title='Edit Bucket')
@@ -91,7 +94,8 @@ def new_bucket():
 	if 'submit' in request.form:
 		name = request.form['name']
 		size = int(request.form['size'])
-		bucket = Bucket(name=name, balance=50, size=size)
+		refill = int(request.form['refill'])
+		bucket = Bucket(name=name, balance=50, refill=refill, size=size)
 		db.session.add(bucket)
 		db.session.commit()
 		return redirect('/')

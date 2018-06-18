@@ -8,7 +8,16 @@
                 {% if bucket %}    
                     value='{{ bucket.name }}'
                 {% endif %}
-            placeholder='My Bucket'>
+            >
+        </div>
+
+        <div class='form-group'>
+            <label class='input-label'>Refill</label>
+            <input name='refill' type='number' class='form-control input-custom input-border' min='0' step='1' 
+                {% if bucket %}
+                    value='{{ bucket.refill }}'
+                {% endif %}
+            >
         </div>
 
         <div class='form-group'>
@@ -17,7 +26,7 @@
                 {% if bucket %}
                     value='{{ bucket.size }}'
                 {% endif %}
-            placeholder='100'>
+            >
         </div>
         
         <div class='text-center'>
