@@ -12,13 +12,13 @@
 			<input name='desc' type='text' class='form-control input-custom input-border'>
 		</div>
 
-		<div class=''>
+		<div class='text-center'>
 			<button name='submit' type='submit' class='btn btn-custom'>Spend</button>
 		</div>
 	</form>
 
-	<div class='text-center'>
-		<a class='btn btn-custom' href='{{ bucket.id }}/edit'>Edit</a>
-		<a class='btn btn-custom' href='{{ bucket.id }}/delete'>Delete</a>
+	<div class='row justify-content-center'>
+        <div class='text-center col-4'><a class='btn btn-custom' href='{{ bucket.id }}/edit'>Edit</a></div>
+        <div class='text-center col-4'><a class='btn btn-custom' href='{{ bucket.id }}/delete'>Delete</a></div>
 	</div>	
 {% endblock %}

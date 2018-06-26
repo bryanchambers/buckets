@@ -1,24 +1,30 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-	<ul class='list-group' style='margin: 0; padding: 0;'>
-        
-        {% for envelope in envelopes %}
-            <li class='list-group-item' style='margin: 0; padding: 0; border: none; background: #f2f2f2;'>
+    <div class='row'>
+        <div class='col'>
+            <ul class='list-group' style='margin: 0; padding: 0;'>
                 
-                <a href='buckets/{{ envelope.id }}'>
-                    <div class='progress bucket'>
-                        <div class='bucket-label bucket-name'>{{ envelope.name }}</div>
-                        <div class="progress-bar bucket-fill" style='width: {{ ((envelope.balance * 100) / envelope.size) | int }}%'></div>
-                        <div class='bucket-label bucket-balance'>{{ envelope.balance | int }}</div>
-                    </div>
-                </a>
-            </li>
-            
+                {% for envelope in envelopes %}
+                    <li class='list-group-item' style='margin: 0; padding: 0; border: none; background: #f2f2f2;'>
+                        
+                        <a href='buckets/{{ envelope.id }}'>
+                            <div class='progress bucket'>
+                                <div class='bucket-label bucket-name'>{{ envelope.name }}</div>
+                                <div class="progress-bar bucket-fill" style='width: {{ ((envelope.balance * 100) / envelope.size) | int }}%'></div>
+                                <div class='bucket-label bucket-balance'>{{ envelope.balance | int }}</div>
+                            </div>
+                        </a>
+                    </li>
+                    
 
-        {% endfor %}
-	</ul>
-    
-    <div class='text-center'><a class="btn btn-custom" id='button' href='buckets/refill' role="button">Refill</a></div>
-	<div class='text-center'><a class="btn btn-custom" id='button' href='buckets/new' role="button">New Bucket</a></div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class='row justify-content-center'>
+        <div class='text-center col-4'><a class="btn btn-custom" id='button' href='buckets/refill' role="button">Refill</a></div>
+        <div class='text-center col-4'><a class="btn btn-custom" id='button' href='buckets/new' role="button">New</a></div>
+    </div>
 {% endblock %}
