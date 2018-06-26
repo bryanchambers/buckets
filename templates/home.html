@@ -10,7 +10,7 @@
                         
                         <a href='buckets/{{ envelope.id }}'>
                             <div class='progress bucket'>
-                                <div class='bucket-label bucket-name'>{{ envelope.name }}</div>
+                                <div class='bucket-label bucket-name'>{{ envelope.name }} <span class='bucket-refill'>[{{ envelope.refill }}]</span></div>
                                 <div class="progress-bar bucket-fill" style='width: {{ ((envelope.balance * 100) / envelope.size) | int }}%'></div>
                                 <div class='bucket-label bucket-balance'>{{ envelope.balance | int }}</div>
                             </div>
@@ -24,7 +24,7 @@
     </div>
 
     <div class='row justify-content-center'>
-        <div class='text-center col-4'><a class="btn btn-custom" id='button' href='buckets/refill' role="button">Refill</a></div>
-        <div class='text-center col-4'><a class="btn btn-custom" id='button' href='buckets/new' role="button">New</a></div>
+        <div class='text-center col-4'><a class="btn btn-info btn-custom" id='button' href='buckets/refill' role="button">Refill</a></div>
+        <div class='text-center col-4'><a class="btn btn-info btn-custom" id='button' href='buckets/new' role="button">New</a></div>
     </div>
 {% endblock %}
