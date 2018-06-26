@@ -49,7 +49,7 @@ body {
 }
 
 .bucket-refill {
-    color: gray;
+    color: #999999;
 }
 
 .bucket-balance {
@@ -68,6 +68,8 @@ body {
     min-width: 33%;
     font-size: 50px;
     padding: 30px;
+    background: #189a7a !important;
+    color: white;
     border-radius: 15px;
 }
 
