@@ -103,6 +103,16 @@ def new_bucket():
 
 
 
+@app.route('/buckets/refill')
+def refill():
+    for bucket in Bucket.query.all():
+        refill = bucket.refill if bucket.refill else 0
+        bucket.balance = bucket.balance + refill
+    db.session.commit()
+    return redirect('/')
+
+
+
 if __name__ == '__main__':
 	app.run()
 
