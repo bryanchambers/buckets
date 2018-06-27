@@ -1,6 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+	<div class='row justify-content-center'>
+		<div class='col-2 bucket-stats'>{{ bucket.balance }}</div>
+		<div class='col-2 bucket-stats'>{{ bucket.refill }}</div>
+		<div class='col-2 bucket-stats'>{{ bucket.size }}</div>
+	</div>
+
 	<form action='' method='post' class='form form-custom'>
 		<div class='form-group'>
             <input name='amount' type='number' class='form-control input-custom input-border' step='1'>
