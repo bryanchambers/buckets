@@ -69,8 +69,12 @@ def edit(id):
 	bucket = Bucket.query.get(id)
 	if 'submit' in request.form:
 		name = request.form['name']
-		size = int(request.form['size'])
-		refill = int(request.form['refill'])
+		size = request.form['size']
+		size = int(size) if size != '' else 100
+		
+		refill = request.form['refill']
+		refill = int(refill) if refill != '' else 0
+
 		bucket.name = name
 		bucket.size = size
 		bucket.refill = refill
@@ -93,9 +97,15 @@ def delete(id):
 def new_bucket():
 	if 'submit' in request.form:
 		name = request.form['name']
-		size = int(request.form['size'])
-		refill = int(request.form['refill'])
-		bucket = Bucket(name=name, balance=50, refill=refill, size=size)
+		name = name if name != '' else 'Bucket'
+
+		size = request.form['size']
+		size = int(size) if size != '' else 100
+
+		refill = request.form['refill']
+		refill = int(refill) if refill != '' else 0
+
+		bucket = Bucket(name=name, balance=refill, refill=refill, size=size)
 		db.session.add(bucket)
 		db.session.commit()
 		return redirect('/')

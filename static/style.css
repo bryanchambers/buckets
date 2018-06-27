@@ -65,15 +65,24 @@ body {
 
 
 .btn-custom {
-    min-width: 33%;
+    min-width: 250px;
     font-size: 50px;
     padding: 30px;
-    background: #189a7a !important;
-    color: white;
+    color: #f2f2f2;
     border-radius: 15px;
 }
 
+.btn-green {
+    background: #189a7a !important;
+}
 
+.btn-red {
+    background: #9a1818 !important;
+}
+
+.btn-blue {
+    background: #18599a !important;
+}
 
 
 
