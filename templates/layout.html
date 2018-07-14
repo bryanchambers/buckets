@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Budget</title>
+		<link rel="shortcut icon" type='image/png' href="{{ url_for('static', filename='icon.png') }}">
+		<title>Buckets</title>
 		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
 		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		
 	</head>
 
 	<body>
@@ -12,5 +14,5 @@
 			{% block body %}{% endblock %}
 		</div>
     </body>
-    <a id='home' href='/'>Home</a>
+    <a id='home' href='/'><img src="{{ url_for('static', filename='bucket.svg') }}" alt=""></a>
 </html>

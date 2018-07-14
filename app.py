@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -15,12 +16,17 @@ db = SQLAlchemy(app)
 
 class Bucket(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(100))
+	name = db.Column(db.String(50))
 	balance = db.Column(db.Float)
 	refill = db.Column(db.Integer)
 	size = db.Column(db.Integer)
 
 
+class Purchase(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	desc = db.Column(db.String(150))
+	amount = db.Column(db.Float)
+	date = db.Column(db.DateTime)
 
 
 
@@ -32,16 +38,6 @@ class Bucket(db.Model):
 
 @app.route('/')
 def home():
-	envelopes = [
-		{'name': 'Groceries',     'amount': 30},
-		{'name': 'Restaurants',   'amount': 0},
-		{'name': 'Fun Stuff',     'amount': 20},
-		{'name': 'Boring Things', 'amount': 10},
-		{'name': 'Reyn',          'amount': 50},
-		{'name': 'Bryan',         'amount': 75},
-		{'name': 'Adventures',    'amount': 90},
-		{'name': 'Apartment',     'amount': 100},
-	]
 	envelopes = Bucket.query.all()
 	return render_template('home.html', envelopes=envelopes, title='Buckets')
 
@@ -55,8 +51,13 @@ def bucket(id):
 	bucket = Bucket.query.get(id)
 	if 'submit' in request.form:
 		amount = request.form['amount']
+		desc = request.form['desc']
 		if amount != '':
-			bucket.balance = bucket.balance - float(amount)
+			amount = float(amount)
+			bucket.balance = bucket.balance - amount
+
+			purchase = Purchase(desc=desc, amount=amount, date=datetime.now())
+			db.session.add(purchase)
 			db.session.commit()
 			return redirect('/')
 	return render_template('bucket.html', bucket=bucket, title=bucket.name)
@@ -120,6 +121,14 @@ def refill():
         bucket.balance = bucket.balance + refill
     db.session.commit()
     return redirect('/')
+
+
+
+
+@app.route('/purchases')
+def purchases():
+	purchases = Purchase.query.all()
+	return render_template('purchases.html', purchases=purchases, title='Purchases')
 
 
 

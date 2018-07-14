@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+	<table class='table'>
+	{% for purchase in purchases %}
+		<tr>
+			<td>{{ purchase.date.strftime('%d %b') }}</td>
+			<td>{{ purchase.amount }}</td>
+			<td>{{ purchase.desc }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endblock %}
