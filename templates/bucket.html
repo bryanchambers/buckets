@@ -19,7 +19,9 @@
 		</div>
 
 		<div class='text-center btn-spacer'>
-			<button name='submit' type='submit' class='btn btn-custom btn-green'>Spend</button>
+			<button name='submit' type='submit' value='2' class='btn btn-custom btn-green'>{{ day_before.strftime('%d %b') }}</button>
+			<button name='submit' type='submit' value='1' class='btn btn-custom btn-green'>Yesterday</button>
+			<button name='submit' type='submit' value='0' class='btn btn-custom btn-green'>Today</button>
 		</div>
 	</form>
 

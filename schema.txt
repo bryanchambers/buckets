@@ -1,2 +1,2 @@
-CREATE TABLE bucket(id INTEGER PRIMARY KEY, name TEXT, balance REAL, refill INTEGER, size INTEGER);
-CREATE TABLE purchase(id INTEGER PRIMARY KEY, desc TEXT, amount REAL, date INTEGER);
+CREATE TABLE bucket(id INTEGER PRIMARY KEY, name TEXT, balance INTEGER, refill INTEGER, size INTEGER);
+CREATE TABLE purchase(id INTEGER PRIMARY KEY, bucket_id INTEGER, desc TEXT, amount INTEGER, date INTEGER);

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
@@ -20,10 +20,12 @@ class Bucket(db.Model):
 	balance = db.Column(db.Float)
 	refill = db.Column(db.Integer)
 	size = db.Column(db.Integer)
+	purchases = db.relationship('Purchase', backref='bucket')
 
 
 class Purchase(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	bucket_id = db.Column(db.Integer, db.ForeignKey('bucket.id'))
 	desc = db.Column(db.String(150))
 	amount = db.Column(db.Float)
 	date = db.Column(db.DateTime)
@@ -56,11 +58,13 @@ def bucket(id):
 			amount = float(amount)
 			bucket.balance = bucket.balance - amount
 
-			purchase = Purchase(desc=desc, amount=amount, date=datetime.now())
+			date = datetime.now() - timedelta(days=int(request.form['submit']))
+			purchase = Purchase(desc=desc, amount=amount, bucket=bucket, date=date)
 			db.session.add(purchase)
 			db.session.commit()
 			return redirect('/')
-	return render_template('bucket.html', bucket=bucket, title=bucket.name)
+	day_before = datetime.today() - timedelta(days=2)
+	return render_template('bucket.html', bucket=bucket, title=bucket.name, day_before=day_before)
 
 
 
@@ -127,7 +131,7 @@ def refill():
 
 @app.route('/purchases')
 def purchases():
-	purchases = Purchase.query.all()
+	purchases = Purchase.query.order_by(Purchase.date.desc())
 	return render_template('purchases.html', purchases=purchases, title='Purchases')
 
 
