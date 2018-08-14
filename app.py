@@ -27,11 +27,8 @@ class Purchase(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	bucket_id = db.Column(db.Integer, db.ForeignKey('bucket.id'))
 	desc = db.Column(db.String(150))
-	amount = db.Column(db.Float)
+	amount = db.Column(db.Integer)
 	date = db.Column(db.DateTime)
-
-
-
 
 
 

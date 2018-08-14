@@ -27,7 +27,7 @@ body {
 .bucket {
     position: relative;
     height: 150px;
-    border: 5px solid #8c8c8c;
+    border: 3px solid #8c8c8c;
     margin: 5px;
     margin-bottom: 50px;
     background:#f2f2f2;
@@ -75,7 +75,7 @@ body {
 
 
 .btn-custom {
-    min-width: 250px;
+    width: 500px;
     font-size: 50px;
     padding: 30px;
     color: #f2f2f2;
@@ -83,7 +83,7 @@ body {
 }
 
 .btn-green {
-    background: #189a7a !important;
+    background: #5cd699 !important;
 }
 
 .btn-red {
@@ -91,10 +91,12 @@ body {
 }
 
 .btn-blue {
-    background: #18599a !important;
+    background: #5c7ad6 !important;
 }
 
-
+.btn-yellow {
+    background: #d6d65c !important;
+}
 
 .btn-spacer {
     margin-top: 130px;
