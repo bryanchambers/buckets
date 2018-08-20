@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+	<form action='' method='post' class='form form-custom'>
+		<div class='form-group'>
+            <select name='from' class='form-control select-custom input-border'>
+				{% for bucket in buckets %}
+					<option value='{{bucket.id}}'>{{bucket.name}}</option>
+				{% endfor %}
+			</select>
+            <label class='input-label'>From</label>
+		</div>
+
+		<div class='form-group'>
+			<select name='to' class='form-control select-custom input-border'>
+				{% for bucket in buckets %}
+					<option value='{{bucket.id}}'>{{bucket.name}}</option>
+				{% endfor %}
+			</select>
+			<label class='input-label'>To</label>
+		</div>
+
+		<div class='form-group'>
+			<input name='amount' type='number' class='form-control input-custom input-border' min='1' step='1'>
+			<label class='input-label'>Amount</label>
+		</div>
+
+		<div class='text-center btn-spacer'>
+			<button name='submit' type='submit' value='0' class='btn btn-custom btn-green'>Transfer</button>
+		</div>
+	</form>	
+{% endblock %}

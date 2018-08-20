@@ -133,6 +133,22 @@ def purchases():
 
 
 
+@app.route('/transfer', methods=['GET', 'POST'])
+def transfer():
+	if 'submit' in request.form:
+		from_bucket = Bucket.query.get(int(request.form['from']))
+		to_bucket   = Bucket.query.get(int(request.form['to']))
+		amount      = int(request.form['amount'])
+
+		from_bucket.balance = from_bucket.balance - amount
+		to_bucket.balance = to_bucket.balance + amount
+		db.session.commit()
+		return redirect('/')
+	buckets = Bucket.query.all()
+	return render_template('transfer.html', buckets=buckets, title='Transfer')
+
+
+
 if __name__ == '__main__':
 	app.run()
 
