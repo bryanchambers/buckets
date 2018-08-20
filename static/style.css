@@ -137,8 +137,9 @@ body {
     text-align: center !important;
     border: none;
     border-radius: 15px;
-    color: #4770eb;
-    -webkit-appearance: none;
+	color: #4770eb;
+	text-size-adjust: none;
+    -webkit-appearance: none !important;
 }
 
 .input-custom:focus {
