@@ -49,19 +49,39 @@ def home():
 def bucket(id):
 	bucket = Bucket.query.get(id)
 	if 'submit' in request.form:
-		amount = request.form['amount']
-		desc = request.form['desc']
-		if amount != '':
-			amount = float(amount)
-			bucket.balance = bucket.balance - amount
+		amount = int(request.form['amount'])
+		desc   = str(request.form['desc'])
+		day    = str(request.form['day'])
+		time   = str(request.form['time'])
+		
+		bucket.balance = bucket.balance - amount
+		
+		timestamp = datetime.strptime(day + 'T' + time, '%Y-%m-%dT%H:%M')
+		purchase  = Purchase(desc=desc, amount=amount, bucket=bucket, date=timestamp)
+		
+		db.session.add(purchase)
+		db.session.commit()
+		return redirect('/')
+	
+	today = datetime.today()
+	days  = []
+	for i in range(8):
+		date = today - timedelta(days=i)
+		days.append({
+			'display': 'Today' if i == 0 else str(i) + 'd ' + date.strftime('%a %d %b'),
+			'value':    date.strftime('%Y-%m-%d')
+		})
+	
+	times = [{'display': 'Now', 'value': date.strftime('%H:%M')}]
+	for h in range(9, 22):
+		hour   = str(h) if h <= 12 else str(h - 12)
+		period =   'am' if h <  12 else 'pm'
+		times.append({
+			'display': hour + period,
+			'value':   str(h).zfill(2) + ':00'
+		})
 
-			date = datetime.now() - timedelta(days=int(request.form['submit']))
-			purchase = Purchase(desc=desc, amount=amount, bucket=bucket, date=date)
-			db.session.add(purchase)
-			db.session.commit()
-			return redirect('/')
-	day_before = datetime.today() - timedelta(days=2)
-	return render_template('bucket.html', bucket=bucket, title=bucket.name, day_before=day_before)
+	return render_template('bucket.html', bucket=bucket, title=bucket.name, days=days, times=times)
 
 
 

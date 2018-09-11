@@ -6,11 +6,12 @@ body {
 #home {
     position: fixed;
     left: 30px;
-    bottom: 30px;
+	bottom: 30px;
 }
 
 #home img {
-    height: 50px;
+	height: 100px;
+	opacity: 0.5;
 }
 
 #wrapper {

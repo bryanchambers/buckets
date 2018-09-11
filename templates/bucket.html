@@ -1,15 +1,9 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-	<div class='row justify-content-center'>
-		<div class='col-2 bucket-stats'>{{ bucket.balance }}</div>
-		<div class='col-2 bucket-stats'>{{ bucket.refill }}</div>
-		<div class='col-2 bucket-stats'>{{ bucket.size }}</div>
-	</div>
-
 	<form action='' method='post' class='form form-custom'>
 		<div class='form-group'>
-            <input name='amount' type='number' class='form-control input-custom input-border' step='1'>
+            <input name='amount' type='number' class='form-control input-custom input-border' step='1' required>
             <label class='input-label'>Amount</label>
 		</div>
 
@@ -18,15 +12,34 @@
             <label class='input-label'>Description</label>
 		</div>
 
-		<div class='text-center btn-spacer'>
-			<button name='submit' type='submit' value='2' class='btn btn-custom btn-green'>{{ day_before.strftime('%d %b') }}</button>
-			<button name='submit' type='submit' value='1' class='btn btn-custom btn-green'>Yesterday</button>
-			<button name='submit' type='submit' value='0' class='btn btn-custom btn-green'>Today</button>
+		<div class='form-group'>
+			<select name='day' class='form-control select-custom input-border'>
+				{% for day in days %}
+					<option value='{{day.value}}'>{{day.display}}</option>
+				{% endfor %}
+			</select>
+			<label class='input-label'>Day</label>
+		</div>
+
+		<div class='form-group'>
+			<select name='time' class='form-control select-custom input-border'>
+				{% for time in times %}
+					<option value='{{time.value}}'>{{time.display}}</option>
+				{% endfor %}
+			</select>
+			<label class='input-label'>Time</label>
+		</div>
+		
+		<div class='row btn-spacer'>
+			<div class='text-center col'><button name='submit' type='submit' class='btn btn-custom btn-green'>Spend</button></div>
 		</div>
 	</form>
 
-	<div class='row justify-content-center'>
-        <div class='text-center col-4'><a class='btn btn-custom btn-blue' href='{{ bucket.id }}/edit'>Edit</a></div>
-        <div class='text-center col-4'><a class='btn btn-custom btn-red' href='{{ bucket.id }}/delete'>Delete</a></div>
-	</div>	
+	<div class='row btn-spacer'>
+		<div class='text-center col'><a class='btn btn-custom btn-blue' href='{{ bucket.id }}/edit'>Edit</a></div>
+	</div>
+
+	<div class='row mt-5'>
+		<div class='text-center col'><a class='btn btn-custom btn-red' href='{{ bucket.id }}/delete'>Delete</a></div>
+	</div>
 {% endblock %}
