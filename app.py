@@ -19,6 +19,7 @@ class Bucket(db.Model):
 	name = db.Column(db.String(50))
 	balance = db.Column(db.Float)
 	refill = db.Column(db.Integer)
+	last_refill = db.Column(db.DateTime)
 	size = db.Column(db.Integer)
 	purchases = db.relationship('Purchase', backref='bucket')
 
@@ -137,11 +138,30 @@ def new_bucket():
 
 @app.route('/buckets/refill')
 def refill():
-    for bucket in Bucket.query.all():
-        refill = bucket.refill if bucket.refill else 0
-        bucket.balance = bucket.balance + refill
-    db.session.commit()
-    return redirect('/')
+	buckets = Bucket.query.all()
+
+	last = None
+	for bucket in buckets:
+		if last:
+			if bucket.last_refill > last: last = bucket.last_refill
+		else:
+			last = bucket.last_refill
+	
+	if not last or last + timedelta(days=7) < datetime.today():		
+		refill_date = last + timedelta(days=7) if last else datetime.today()
+		day = refill_date.weekday()
+		shift = day - 4 if day >= 4 else day + 3
+		refill_date = refill_date - timedelta(days=shift)
+		refill_date = refill_date.replace(hour=18, minute=0, second=0, microsecond=0)
+
+		for bucket in buckets:
+			refill = bucket.refill if bucket.refill else 0
+			bucket.balance = bucket.balance + refill
+			bucket.last_refill = refill_date
+		db.session.commit()
+		return redirect('/')
+	else:
+		return "It's not time for a refill yet!"
 
 
 
