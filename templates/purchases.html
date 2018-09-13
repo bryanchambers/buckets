@@ -1,20 +1,15 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-	<table class='table table-striped'>
-		<tr>
-			<th>Date</th>
-			<th>Amt</th>
-			<th>Bucket</th>
-			<th>Description</th>
-		</tr>
 	{% for purchase in purchases %}
-		<tr>
-			<td>{{ purchase.date.strftime('%d %b') }}</td>
-			<td>{{ purchase.amount }}</td>
-			<td>{{ purchase.bucket.name }}</td>
-			<td>{{ purchase.desc }}</td>
-		</tr>
+		<div class='row'>
+			<div class='col'>{{ purchase.date.strftime('%d %b %-I:%M%p') }}</div>
+			<div class='col'>{{ purchase.amount }}</div>
+			<div class='col'>{{ purchase.bucket.name }}</div>
+		</div>
+		
+		<div class='row mb-5'>
+			<div class='col'>{{ purchase.desc }}</div>
+		</div>
 	{% endfor %}
-	</table>
 {% endblock %}
