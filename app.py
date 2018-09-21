@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 app = Flask(__name__)
@@ -43,7 +43,9 @@ def home():
 
 
 
-
+@app.route('/timezone')
+def get_timezone():
+	return render_template('timezone.html')
 
 
 @app.route('/buckets/<int:id>', methods=['GET', 'POST'])
@@ -54,26 +56,30 @@ def bucket(id):
 		desc   = str(request.form['desc'])
 		day    = str(request.form['day'])
 		time   = str(request.form['time'])
+		offset = int(request.form['tz-offset'])
 		
-		bucket.balance = bucket.balance - amount
-		
-		timestamp = datetime.strptime(day + 'T' + time, '%Y-%m-%dT%H:%M')
-		purchase  = Purchase(desc=desc, amount=amount, bucket=bucket, date=timestamp)
-		
-		db.session.add(purchase)
-		db.session.commit()
-		return redirect('/')
+		if day == 'today':
+			if time == 'now':
+				timestamp = datetime.utcnow()
+			else:
+				today     = datetime.strftime(datetime.utcnow(), '%Y-%m-%d')
+				timestamp = datetime.strptime(today + '_' + time, '%Y-%m-%d_%H:%M') + timedelta(minutes=offset)
+		else:
+			if time == 'now':
+				timestamp = False
+			else:
+				timestamp = datetime.strptime(day + '_' + time, '%Y-%m-%d_%H:%M') + timedelta(minutes=offset)
+
+		if timestamp:
+			bucket.balance = bucket.balance - amount
+			
+			purchase  = Purchase(desc=desc, amount=amount, bucket=bucket, date=timestamp)
+			
+			db.session.add(purchase)
+			db.session.commit()
+			return redirect('/')
 	
-	today = datetime.today()
-	days  = []
-	for i in range(8):
-		date = today - timedelta(days=i)
-		days.append({
-			'display': 'Today' if i == 0 else str(i) + 'd ' + date.strftime('%a %d %b'),
-			'value':    date.strftime('%Y-%m-%d')
-		})
-	
-	times = [{'display': 'Now', 'value': date.strftime('%H:%M')}]
+	times = [{'display': 'Now', 'value': 'now'}]
 	for h in range(9, 22):
 		hour   = str(h) if h <= 12 else str(h - 12)
 		period =   'am' if h <  12 else 'pm'
@@ -82,7 +88,7 @@ def bucket(id):
 			'value':   str(h).zfill(2) + ':00'
 		})
 
-	return render_template('bucket.html', bucket=bucket, title=bucket.name, days=days, times=times)
+	return render_template('bucket.html', bucket=bucket, title=bucket.name, times=times)
 
 
 
@@ -166,10 +172,21 @@ def refill():
 
 
 
-@app.route('/purchases')
+@app.route('/purchases', methods=['GET', 'POST'])
 def purchases():
-	purchases = Purchase.query.order_by(Purchase.date.desc())
-	return render_template('purchases.html', purchases=purchases, title='Purchases')
+	if request.form:
+		if 'tz-offset' in request.form:
+			purchases = Purchase.query.order_by(Purchase.date.desc())
+			offset    = int(round(float(request.form['tz-offset']) / 60, 0)) * -1
+		
+			for purchase in purchases:
+				purchase.date = purchase.date + timedelta(hours=offset)
+		
+			return render_template('purchases.html', purchases=purchases, title='Purchases')
+		else:
+			return redirect('/')
+	else:
+		return render_template('timezone.html', url='/purchases')
 
 
 

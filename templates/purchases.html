@@ -1,6 +1,14 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+	<script>
+		window.onload = function() {
+			var now    = new Date();
+			var offset = now.getTimezoneOffset();
+			console.log(offset);
+		}
+	</script>
+
 	{% for purchase in purchases %}
 		<div class='row'>
 			<div class='col'>{{ purchase.date.strftime('%d %b %-I:%M%p') }}</div>
