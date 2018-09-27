@@ -62,7 +62,7 @@ def bucket(id):
 			if time == 'now':
 				timestamp = datetime.utcnow()
 			else:
-				today     = datetime.strftime(datetime.utcnow(), '%Y-%m-%d')
+				today     = datetime.strftime(datetime.utcnow() - timedelta(minutes=offset), '%Y-%m-%d')
 				timestamp = datetime.strptime(today + '_' + time, '%Y-%m-%d_%H:%M') + timedelta(minutes=offset)
 		else:
 			if time == 'now':
