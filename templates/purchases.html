@@ -1,23 +1,13 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-	<script>
-		window.onload = function() {
-			var now    = new Date();
-			var offset = now.getTimezoneOffset();
-			console.log(offset);
-		}
-	</script>
-
-	{% for purchase in purchases %}
-		<div class='row'>
-			<div class='col'>{{ purchase.date.strftime('%d %b %-I:%M%p') }}</div>
-			<div class='col'>{{ purchase.amount }}</div>
-			<div class='col'>{{ purchase.bucket.name }}</div>
-		</div>
-		
-		<div class='row mb-5'>
-			<div class='col'>{{ purchase.desc }}</div>
-		</div>
-	{% endfor %}
+    <table style='width: 95%; margin: 0 auto; border-top: 1px solid #999999'>
+        {% for purchase in purchases %}
+            <tr style='border-bottom: 1px solid #999999'>
+                <td style='padding: 20px 0px;'>{{ purchase.date.strftime('%m/%d %I:%M%p')[:-1].lower() }}</td>
+                <td style='padding: 20px 50px; text-align: center;'>{{ purchase.amount }}</td>
+                <td style='padding: 20px 0px;'>{{ purchase.desc|truncate(20) }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
