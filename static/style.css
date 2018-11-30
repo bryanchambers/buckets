@@ -24,13 +24,13 @@ body {
 
 #purchases table {
     width:  95%;
-    margin: 50px auto;
+    margin: 40px auto;
 }
 
 #purchases tr { border-bottom: 1px solid #cccccc; }
 
 
-#purchases td {
+#purchases td, th {
     padding-top:    25px;
     padding-bottom: 25px;
 }
@@ -51,7 +51,7 @@ body {
 }
 
 #purchases p {
-    margin:  80px 10px;
+    margin:  100px 10px;
     color: #b3b3b3;
     text-align: center;
     
