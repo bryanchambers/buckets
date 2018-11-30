@@ -5,9 +5,9 @@
         <table>
             {% for purchase in purchases %}
                 <tr>
-                    <td class='hpad-none'>{{ purchase.date.strftime('%m/%d %I:%M%p')[:-1].lower() }}</td>
-                    <td class='amount'   >{{ purchase.amount }}</td>
-                    <td class='hpad-none'>{{ purchase.desc|truncate(20) }}</td>
+                    <td class='date'  >{{ purchase.date.strftime('%m/%d %I:%M%p')[:-1].lower() }}</td>
+                    <td class='amount'>{{ purchase.amount }}</td>
+                    <td class='desc'  >{{ purchase.desc|truncate(20) }}</td>
                 </tr>
             {% endfor %}
         </table>

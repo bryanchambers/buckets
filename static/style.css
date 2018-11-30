@@ -24,7 +24,7 @@ body {
 
 #purchases table {
     width:  95%;
-    margin: 0 auto;
+    margin: 20px auto;
     border-top: 1px solid #cccccc;
 }
 
@@ -42,8 +42,17 @@ body {
     text-align:    center;
 }
 
+#purchases .date, #purchases .desc {
+    padding-left:  0px;
+    padding-right: 0px;
+}
+
+#purchases .date {
+    text-align: right;
+}
+
 #purchases p {
-    margin:  100px 10px;
+    margin:  80px 10px;
     color: #b3b3b3;
     text-align: center;
     
