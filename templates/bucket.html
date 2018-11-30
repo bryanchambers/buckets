@@ -1,24 +1,17 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+	<form action='' method='post' onload='getTimezoneOffset()'>
 
-	<form action='' method='post' class='form form-custom' onload='getTimezoneOffset()'>
-		<div class='form-group'>
-			<input name='amount' type='number' class='form-control input-custom input-border' step='1' required>
-			<label class='input-label'>Amount</label>
-		</div>
+		<input name='amount' type='number' step='1' required placeholder='Amount'>
 
-		<div class='form-group'>
-			<input name='desc' type='text' class='form-control input-custom input-border'>
-			<label class='input-label'>Description</label>
-		</div>
+		<input name='desc' type='text' placeholder='Description'>
 
-		<div class='form-group'>
-			<select id='day' name='day' class='form-control select-custom input-border'>
-				<option value='today'>Today</option>
-			</select>
-			<label class='input-label'>Day</label>
-		</div>
+		<select id='day' name='day'>
+			<option value='today'>Today</option>
+		</select>
+
+
 
 		<script>
 			var date   = new Date();
@@ -46,18 +39,15 @@
 				}
 		</script>
 
-		<div class='form-group'>
-			<select id='time' name='time' class='form-control select-custom input-border'>
-				{% for time in times %}
-					<option value='{{ time.value }}'>{{ time.display }}</option>
-				{% endfor %}
-			</select>
-			<label class='input-label'>Time</label>
-		</div>
+
+
+		<select id='time' name='time'>
+			{% for time in times %}
+				<option value='{{ time.value }}'>{{ time.display }}</option>
+			{% endfor %}
+		</select>
 		
-		<div class='row btn-spacer'>
-			<div class='text-center col'><button name='submit' type='submit' class='btn btn-custom btn-green'>Spend</button></div>
-		</div>
+		<button name='submit' type='submit'>Spend</button>
 
 		<input id='tz-offset' name='tz-offset' type='hidden'>
 
@@ -67,14 +57,10 @@
 			
 			document.getElementById('tz-offset').value = offset;
 		</script>
+
 	</form>
 
-	<div class='row btn-spacer'>
-		<div class='text-center col'><a class='btn btn-custom btn-blue' href='{{ bucket.id }}/edit'>Edit</a></div>
-	</div>
-
-	<div class='row mt-5'>
-		<div class='text-center col'><a class='btn btn-custom btn-red' href='{{ bucket.id }}/delete'>Delete</a></div>
-	</div>
+	<a href='{{ bucket.id }}/edit'>Edit</a>
+	<a href='{{ bucket.id }}/delete'>Delete</a>
 
 {% endblock %}
