@@ -24,8 +24,7 @@ body {
 
 #purchases table {
     width:  95%;
-    margin: 20px auto;
-    border-top: 1px solid #cccccc;
+    margin: 50px auto;
 }
 
 #purchases tr { border-bottom: 1px solid #cccccc; }
