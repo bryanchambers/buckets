@@ -176,7 +176,7 @@ def refill():
 def purchases():
 	if request.form:
 		if 'tz-offset' in request.form:
-			purchases = Purchase.query.order_by(Purchase.date.desc())
+			purchases = Purchase.query.order_by(Purchase.date.desc()).limit(100)
 			offset    = int(round(float(request.form['tz-offset']) / 60, 0)) * -1
 		
 			for purchase in purchases:

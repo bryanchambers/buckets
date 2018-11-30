@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <table style='width: 95%; margin: 0 auto; border-top: 1px solid #999999'>
+    <table id='purchases'>
         {% for purchase in purchases %}
-            <tr style='border-bottom: 1px solid #999999'>
-                <td style='padding: 20px 0px;'>{{ purchase.date.strftime('%m/%d %I:%M%p')[:-1].lower() }}</td>
-                <td style='padding: 20px 50px; text-align: center;'>{{ purchase.amount }}</td>
-                <td style='padding: 20px 0px;'>{{ purchase.desc|truncate(20) }}</td>
+            <tr>
+                <td class='hpad-none'>{{ purchase.date.strftime('%m/%d %I:%M%p')[:-1].lower() }}</td>
+                <td class='amount'   >{{ purchase.amount }}</td>
+                <td class='hpad-none'>{{ purchase.desc|truncate(20) }}</td>
             </tr>
         {% endfor %}
     </table>

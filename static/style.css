@@ -4,6 +4,50 @@ body {
     font-size: 35px;
     color: #262626;
 }
+
+.txt-center {
+    text-align: center;
+}
+
+.vpad-none {
+    padding-top:    0px;
+    padding-bottom: 0px;
+}
+
+.hpad-none {
+    padding-left:  0px;
+    padding-right: 0px;
+}
+
+
+
+
+#purchases {
+    width: 95%;
+    margin: 0 auto;
+    border-top: 1px solid #b3b3b3;
+}
+
+#purchases tr { border-bottom: 1px solid #b3b3b3; }
+
+
+#purchases td {
+    padding-top:    25px;
+    padding-bottom: 25px;
+}
+
+#purchases .amount {
+    padding-left:  50px;
+    padding-right: 50px;
+    text-align:    center;
+}
+
+
+
+
+
+
+
 #home {
     position: fixed;
     left: 30px;
