@@ -45,7 +45,7 @@ input, select {
 
 
 #purchases table {
-    width:  95%;
+    width:  100%;
     margin: 40px auto;
 }
 
@@ -105,6 +105,8 @@ input, select {
 }
 
 #wrapper {
+    width:  95%;
+    margin: 0 auto;
     padding-bottom: 300px;
 }
 
