@@ -1,66 +1,68 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-	<form action='' method='post' onload='getTimezoneOffset()'>
+    <form action='' method='post' onload='getTimezoneOffset()'>
 
-		<input name='amount' type='number' step='1' required placeholder='Amount'>
+        <input name='amount' type='number' step='1' required placeholder='Amount'>
 
-		<input name='desc' type='text' placeholder='Description'>
+        <input name='desc' type='text' placeholder='Description'>
 
-		<select id='day' name='day'>
-			<option value='today'>Today</option>
-		</select>
-
-
-
-		<script>
-			var date   = new Date();
-			var select = document.getElementById('day');
-			var days   = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-			var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	
-			for(var i = 1; i < 8; i++) {
-				date.setTime(date.getTime() - 86400000);
-				
-				var year    = date.getFullYear();
-				var month   = date.getMonth();
-				var day     = date.getDate();
-				var weekday = date.getDay();
-				
-				var option = document.createElement('option');
-				option.innerHTML = days[weekday] + ' ' + day + ' ' + months[month];
-	
-				month++;
-				if(month < 10) { month = '0' + month; }
-				if(day   < 10) { day   = '0' + day; }
-				
-				option.value = year + '-' + month + '-' + day
-				select.appendChild(option);
-				}
-		</script>
+        <select id='day' name='day'>
+            <option value='today'>Today</option>
+        </select>
 
 
 
-		<select id='time' name='time'>
-			{% for time in times %}
-				<option value='{{ time.value }}'>{{ time.display }}</option>
-			{% endfor %}
-		</select>
-		
-		<button name='submit' type='submit'>Spend</button>
+        <script>
+            var date   = new Date();
+            var select = document.getElementById('day');
+            var days   = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-		<input id='tz-offset' name='tz-offset' type='hidden'>
+            for(var i = 1; i < 8; i++) {
+                date.setTime(date.getTime() - 86400000);
+                
+                var year    = date.getFullYear();
+                var month   = date.getMonth();
+                var day     = date.getDate();
+                var weekday = date.getDay();
+                
+                var option = document.createElement('option');
+                option.innerHTML = days[weekday] + ' ' + day + ' ' + months[month];
 
-		<script>
-			var now    = new Date();
-			var offset = now.getTimezoneOffset();
-			
-			document.getElementById('tz-offset').value = offset;
-		</script>
+                month++;
+                if(month < 10) { month = '0' + month; }
+                if(day   < 10) { day   = '0' + day; }
+                
+                option.value = year + '-' + month + '-' + day
+                select.appendChild(option);
+                }
+        </script>
 
-	</form>
+        <select id='time' name='time'>
+            {% for time in times %}
+                <option value='{{ time.value }}'>{{ time.display }}</option>
+            {% endfor %}
+        </select>
 
-	<a href='{{ bucket.id }}/edit'><button>Edit</button></a>
-	<a href='{{ bucket.id }}/delete'><button>Delete</button></a>
+
+
+        <div class='txt-center'><button name='submit' type='submit'>Spend</button></div>
+
+        <input id='tz-offset' name='tz-offset' type='hidden'>
+
+        <script>
+            var now    = new Date();
+            var offset = now.getTimezoneOffset();
+            
+            document.getElementById('tz-offset').value = offset;
+        </script>
+
+    </form>
+
+    <div class='txt-center'>
+        <a href='{{ bucket.id }}/edit'  ><button>Edit</button></a>
+        <a href='{{ bucket.id }}/delete'><button>Delete</button></a>
+    </div>
 
 {% endblock %}
