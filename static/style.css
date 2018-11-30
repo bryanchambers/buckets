@@ -27,9 +27,10 @@ body {
 
 
 input, select {
-	width: 100%;
-	text-align: center;
-	font-size: 20px;
+    width: 100%;
+    text-align: center;
+    font-size:  50px !important;
+    -webkit-appearance: none;
 }
 
 
@@ -76,6 +77,17 @@ input, select {
     text-align: center;
     
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
