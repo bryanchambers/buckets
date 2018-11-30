@@ -31,9 +31,9 @@ input, select {
     margin: 35px 0px;
     padding: 15px 40px;
     font-size:  60px !important;
-    background: #e6e6e6;
+    background: #eaeaea;
     border: 1px solid #cccccc;
-    border-radius: 15px;
+    border-radius: 10px;
     -webkit-appearance: none;
 }
 
@@ -44,7 +44,7 @@ button {
     font-size: 50px;
     background: #e6e6e6;
     border: 1px solid #cccccc;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 
