@@ -1,13 +1,17 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <table id='purchases'>
-        {% for purchase in purchases %}
-            <tr>
-                <td class='hpad-none'>{{ purchase.date.strftime('%m/%d %I:%M%p')[:-1].lower() }}</td>
-                <td class='amount'   >{{ purchase.amount }}</td>
-                <td class='hpad-none'>{{ purchase.desc|truncate(20) }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div id='purchases'>
+        <table>
+            {% for purchase in purchases %}
+                <tr>
+                    <td class='hpad-none'>{{ purchase.date.strftime('%m/%d %I:%M%p')[:-1].lower() }}</td>
+                    <td class='amount'   >{{ purchase.amount }}</td>
+                    <td class='hpad-none'>{{ purchase.desc|truncate(20) }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <p>Showing last 100 purchases</p>
+    </div>
 {% endblock %}

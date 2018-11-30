@@ -22,13 +22,13 @@ body {
 
 
 
-#purchases {
-    width: 95%;
+#purchases table {
+    width:  95%;
     margin: 0 auto;
-    border-top: 1px solid #b3b3b3;
+    border-top: 1px solid #cccccc;
 }
 
-#purchases tr { border-bottom: 1px solid #b3b3b3; }
+#purchases tr { border-bottom: 1px solid #cccccc; }
 
 
 #purchases td {
@@ -37,12 +37,17 @@ body {
 }
 
 #purchases .amount {
-    padding-left:  50px;
-    padding-right: 50px;
+    padding-left:  40px;
+    padding-right: 40px;
     text-align:    center;
 }
 
-
+#purchases p {
+    margin:  100px 10px;
+    color: #b3b3b3;
+    text-align: center;
+    
+}
 
 
 
