@@ -2,25 +2,13 @@
 
 {% block body %}
     <form action='' method='post'>
-        <input name='name' type='text'
-            {% if bucket %}    
-                value='{{ bucket.name }}'
-            {% endif %}
-        >
+        <input name='name' type='text' {% if bucket %} value='{{ bucket.name }}' {% endif %}>
         <label>Name</label>
 
-        <input name='refill' type='number' min='0' step='1' 
-            {% if bucket %}
-                value='{{ bucket.refill }}'
-            {% endif %}
-        >
+        <input name='refill' type='number' min='0' step='1' {% if bucket %} value='{{ bucket.refill }}' {% endif %}>
         <label>Refill</label>
 
-        <input name='size' type='number' min='0' step='1' 
-            {% if bucket %}
-                value='{{ bucket.size }}'
-            {% endif %}
-        >
+        <input name='size' type='number' min='0' step='1' {% if bucket %} value='{{ bucket.size }}' {% endif %}>
         <label>Size</label>
         
         <div class='txt-center'><button name='submit' type='submit' class='button-grn'>Save</button></div>
