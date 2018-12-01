@@ -2,14 +2,13 @@ body {
     background: #f7f7f7;
 	font-family: monospace;
     font-size: 35px;
-    color: #333333;
+    color: #4d4d4d;
 }
 
 #wrapper {
     width:  95%;
     margin: 0 auto;
     padding: 0px;
-    margin-bottom
 }
 
 .txt-center {
