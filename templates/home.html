@@ -3,7 +3,7 @@
 {% block body %}
 
     {% for bucket in buckets %}
-        <a class = 'bucket' href="buckets/{{ bucket['id'] }}">
+        <div class='bucket'><a href="buckets/{{ bucket['id'] }}">
             <div>
                 <span class='name'>{{ bucket['name'] }}</span>
                 <span class='bal' >{{ bucket['balance'] }}</span>
@@ -14,7 +14,7 @@
             <div class='info'>
                 <span>{{ bucket['refill'] }} / {{ bucket['size'] }} --- {{ bucket['outlook'] }}</span>
             </div>
-        </a>
+        </a></div>
     {% endfor %}
 
     <div class='txt-center'>
