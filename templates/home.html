@@ -2,20 +2,17 @@
 
 {% block body %}
 
-    {% for envelope in envelopes %}
-        <a href='buckets/{{ envelope.id }}'>
+    {% for bucket in buckets %}
+        <a href='buckets/{{ bucket.id }}'>
             <div>
-                <span class='name'>{{ envelope.name }}</span>
-                <span class='bal' >{{ envelope.balance | int }}</span>
+                <span class='name'>{{ bucket['name'] }}</span>
+                <span class='bal' >{{ bucket['balance'] }}</span>
             </div>
 
-            <div>
-                <div class='avail'></div><div class='spent'></div>
-            </div>
+            <div class='bar'><div class='available'></div>
 
             <div>
-                <span>Refill: {{ bucket.refill }} Size: {{ bucket.size }}</span>
-                <span>{{ bucket.balance + bucket.refill }}</span>
+                <span>Refill: {{ bucket['refill'] }} Size: {{ bucket['size'] }} Outlook: {{ bucket['outlook'] }}</span>
             </div>
         </a>
     {% endfor %}

@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 class Bucket(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(50))
-	balance = db.Column(db.Float)
+	balance = db.Column(db.Integer)
 	refill = db.Column(db.Integer)
 	last_refill = db.Column(db.DateTime)
 	size = db.Column(db.Integer)
@@ -38,8 +38,21 @@ class Purchase(db.Model):
 
 @app.route('/')
 def home():
-	envelopes = Bucket.query.all()
-	return render_template('home.html', envelopes=envelopes, title='Buckets')
+    results = Bucket.query.all()
+    buckets = []
+
+    for bucket in results:
+        buckets.append({
+            'id':      bucket.id,
+            'name':    bucket.name,
+            'balance': bucket.balance,
+            'refill':  bucket.refill,
+            'size':    bucket.size,
+            'outlook': bucket.balance + bucket.refill,
+            'width':   int((bucket.balance / bucket.size) * 100)
+        })
+
+    return render_template('home.html', buckets=buckets, title='Buckets')
 
 
 
