@@ -13,7 +13,10 @@
                 <div class='avail'></div><div class='spent'></div>
             </div>
 
-            <div>Other Stuff</div>
+            <div>
+                <span>Refill: {{ bucket.refill }} Size: {{ bucket.size }}</span>
+                <span>{{ bucket.balance + bucket.refill }}</span>
+            </div>
         </a>
     {% endfor %}
 
