@@ -99,8 +99,13 @@ button {
 .bucket .bar {
     width: 100%;
     height: 30px;
-    background: gray;
+    /* background: gray; */
     border: 1px solid black;
+}
+
+.bucket .avail {
+    height: 100%;
+    background: blue;
 }
 
 .bucket .bal { float: right; }
