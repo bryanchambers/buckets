@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <form class='btm-spacer' action='' method='post' onload='getTimezoneOffset()'>
+    <form class='btm-spacer-lg' action='' method='post' onload='getTimezoneOffset()'>
 
         <input name='amount' type='number' step='1' required placeholder='Amount'>
 
@@ -60,7 +60,7 @@
 
     </form>
 
-    <div class='txt-center btm-spacer'>
+    <div class='txt-center btm-spacer-sm'>
         <a href='{{ bucket.id }}/edit'  ><button class='button-blu'>Edit</button></a>
         <a href='{{ bucket.id }}/delete'><button class='button-red'>Delete</button></a>
     </div>

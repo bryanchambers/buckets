@@ -9,6 +9,7 @@ body {
     width:  95%;
     margin: 0 auto;
     padding: 0px;
+    margin-bottom
 }
 
 .txt-center {
@@ -33,8 +34,12 @@ body {
 
 
 
-.btm-spacer {
-    margin-bottom: 300px;
+.btm-spacer-lg {
+    margin-bottom: 250px;
+}
+
+.btm-spacer-sm {
+    margin-bottom: 100px;
 }
 
 
