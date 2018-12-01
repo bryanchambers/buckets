@@ -1,19 +1,32 @@
+
+/* --- High Level --- */
+
 body {
-    background: #f7f7f7;
-	font-family: monospace;
-    font-size: 35px;
-    color: #404040;
+    font-family: monospace;
+    font-size:   35px;
+    background:  #f7f7f7;
+    color:       #404040;
 }
 
 #wrapper {
-    width:  95%;
-    margin: 0 auto;
+    width:   95%;
+    margin:  0px auto;
     padding: 0px;
 }
 
-.txt-center {
+#title {
     text-align: center;
+    padding:    0px;
+    font-size:  80px;
 }
+
+
+
+
+
+/* --- General Purpose --- */
+
+.txt-center { text-align: center; }
 
 .vpad-none {
     padding-top:    0px;
@@ -25,76 +38,56 @@ body {
     padding-right: 0px;
 }
 
-#title {
-    text-align: center;
-    padding: 0px;
-    font-size: 80px;
-}
-
-
-
-.btm-spacer-lg {
-    margin-bottom: 200px;
-}
-
-.btm-spacer-sm {
-    margin-bottom: 120px;
-}
+.btm-spacer-lg { margin-bottom: 200px; }
+.btm-spacer-sm { margin-bottom: 120px; }
 
 
 
 
+
+/* --- Forms and Buttons --- */
 
 input, select {
     width: 100%;
-    box-sizing: border-box;
-    margin: 10px 0px 80px;
-    padding: 35px 45px;
-    text-align: center;
-    font-size:  60px !important;
+    box-sizing:  border-box;
+    margin:      10px 0px 80px;
+    padding:     35px 45px;
+    text-align:  center;
+    font-size:   60px !important;
     font-family: inherit;
-    background: #ededed;
-    color: inherit;
+    background:  #ededed;
+    color:       inherit;
     border: 1px solid #bfbfbf;
     border-radius: 10px;
     -webkit-appearance: none;
 }
 
-
 label {
     padding: 0px;
-    margin: 0px 10px;
-    color: #999999;
+    margin:  0px 10px;
+    color:   #999999;
 }
 
 button {
-    margin: 30px 15px;
-    padding: 30px 40px;
+    margin:    30px 15px;
+    padding:   30px 40px;
     font-size: 50px;
     font-family: inherit;
     background: #e6e6e6;
-    color: #404040;
+    color:      #404040;
     border: 1px solid #bfbfbf;
     border-radius: 10px;
 }
 
-
-
-.button-grn {
-    background: #8cd98c;
-}
-
-.button-red {
-    background: #d98c8c;
-}
-
-.button-blu {
-    background: #8c8cd9;
-}
+.button-grn { background: #8cd98c; }
+.button-red { background: #d98c8c; }
+.button-blu { background: #8c8cd9; }
 
 
 
 
+
+/* --- Purchases --- */
 
 #purchases table {
     width:  100%;
