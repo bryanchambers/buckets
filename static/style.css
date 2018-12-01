@@ -24,7 +24,7 @@ body {
 
 
 form {
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 
 
@@ -50,7 +50,7 @@ button {
 }
 
 
-button-grn {
+.button-grn {
     background: #66cc66;
 }
 
