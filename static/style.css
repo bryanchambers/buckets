@@ -61,6 +61,14 @@ button {
     border-radius: 10px;
 }
 
+input {
+    width: 95%;
+}
+
+select {
+    width: 100%
+}
+
 
 .button-grn {
     background: #8cd98c;
