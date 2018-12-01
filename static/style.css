@@ -24,7 +24,7 @@ body {
 
 
 form {
-    margin-bottom: 200px;
+    margin-bottom: 300px;
 }
 
 
@@ -51,15 +51,15 @@ button {
 
 
 .button-grn {
-    background: #94d194;
+    background: #8cd98c;
 }
 
 .button-red {
-    background: #d19494;
+    background: #d98c8c;
 }
 
 .button-blu {
-    background: #9494d1;
+    background: #8c8cd9;
 }
 
 
