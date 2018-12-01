@@ -24,7 +24,7 @@ body {
 
 
 form {
-    margin-bottom: 100px;
+    margin-bottom: 200px;
 }
 
 
@@ -33,7 +33,7 @@ input, select {
     margin: 35px 0px;
     padding: 15px 40px;
     font-size:  60px !important;
-    background: #eaeaea;
+    background: #ededed;
     border: 1px solid #bfbfbf;
     border-radius: 10px;
     -webkit-appearance: none;
