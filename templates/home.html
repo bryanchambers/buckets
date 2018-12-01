@@ -11,10 +11,7 @@
 
             <div class='bar'><div class='available' style="width: {{ bucket['width'] }}%"></div></div>
 
-            <div class='info'>
-                <span>{{ bucket['refill'] }} / {{ bucket['size'] }}</span>
-                <span class='floatr'>{{ bucket['outlook'] }}</span>
-            </div>
+            <div class='info'><span>{{ bucket['refill'] }}:{{ bucket['size'] }}</span></div>
         </a></div>
     {% endfor %}
 

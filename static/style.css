@@ -107,6 +107,7 @@ button {
 .bucket .bar {
     width: 100%;
     height: 30px;
+    margin: 10px;
     background: #e6e6e6;
 }
 
@@ -120,7 +121,7 @@ button {
 .bucket .info {
     margin: 10px 0px;
     font-size: 30px;
-    color: #999999;
+    color: #b3b3b3;
 }
 
 
