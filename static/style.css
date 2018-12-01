@@ -107,13 +107,13 @@ button {
 .bucket .bar {
     width: 100%;
     height: 30px;
-    margin: 10px;
+    margin: 10px 0px;
     background: #e6e6e6;
 }
 
 .bucket .available {
     height: 100%;
-    background: #8c8cd9;
+    background: #4799eb;
 }
 
 .bucket .bal { float: right; }
