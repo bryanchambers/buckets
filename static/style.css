@@ -38,6 +38,9 @@ body {
 }
 
 
+
+
+
 input, select {
     width: 100%;
     box-sizing: border-box;
@@ -52,6 +55,11 @@ input, select {
     -webkit-appearance: none;
 }
 
+
+label {
+    padding: 0px;
+    margin: 0px;
+}
 
 button {
     margin: 30px 15px;
@@ -125,7 +133,7 @@ button {
 
 
 
-
+/* Old CSS */
 
 
 
