@@ -1,36 +1,28 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <form action='' method='post' class='form form-custom'>
-        <div class='form-group'>
-            <input name='name' type='text' class='form-control input-custom input-border' 
-                {% if bucket %}    
-                    value='{{ bucket.name }}'
-                {% endif %}
-            >
-            <label class='input-label'>Name</label>
-        </div>
+    <form action='' method='post'>
+        <input name='name' type='text'
+            {% if bucket %}    
+                value='{{ bucket.name }}'
+            {% endif %}
+        >
+        <label>Name</label>
 
-        <div class='form-group'>
-            <input name='refill' type='number' class='form-control input-custom input-border' min='0' step='1' 
-                {% if bucket %}
-                    value='{{ bucket.refill }}'
-                {% endif %}
-            >
-            <label class='input-label'>Refill</label>
-        </div>
+        <input name='refill' type='number' min='0' step='1' 
+            {% if bucket %}
+                value='{{ bucket.refill }}'
+            {% endif %}
+        >
+        <label>Refill</label>
 
-        <div class='form-group'>
-            <input name='size' type='number' class='form-control input-custom input-border' min='0' step='1' 
-                {% if bucket %}
-                    value='{{ bucket.size }}'
-                {% endif %}
-            >
-            <label class='input-label'>Size</label>
-        </div>
+        <input name='size' type='number' min='0' step='1' 
+            {% if bucket %}
+                value='{{ bucket.size }}'
+            {% endif %}
+        >
+        <label>Size</label>
         
-        <div class='text-center btn-spacer'>
-            <button name='submit' type='submit' class='btn btn-custom btn-green'>Save</button>
-        </div>
+        <div class='txt-center'><button name='submit' type='submit' class='button-grn'>Save</button></div>
     </form>
 {% endblock %}
