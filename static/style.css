@@ -36,7 +36,7 @@ body {
 input, select {
     width: 100%;
     margin: 35px 0px;
-    padding: 15px 40px;
+    padding: 40px 40px;
     font-size:  60px !important;
     font-family: inherit;
     background: #ededed;
@@ -48,7 +48,7 @@ input, select {
 
 button {
     margin: 30px 15px;
-    padding: 15px 30px;
+    padding: 20px 30px;
     font-size: 50px;
     font-family: inherit;
     background: #e6e6e6;
