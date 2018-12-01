@@ -1,28 +1,21 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class='row'>
-        <div class='col'>
-            <ul class='list-group' style='margin: 0; padding: 0;'>
-                
-                {% for envelope in envelopes %}
-                    <li class='list-group-item' style='margin: 0; padding: 0; border: none; background: #f2f2f2;'>
-                        
-                        <a href='buckets/{{ envelope.id }}'>
-                            <div class='progress bucket'>
-                                <div class='bucket-label bucket-name'>{{ envelope.name }}</div>
-                                <div class="progress-bar bucket-fill" style='width: {{ ((envelope.balance * 100) / envelope.size) | int }}%'></div>
-                                <div class='bucket-label bucket-balance'>{{ envelope.balance | int }}</div>
-                            </div>
-                        </a>
-                    </li>
-                    
 
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+    {% for envelope in envelopes %}
+        <a href='buckets/{{ envelope.id }}'>
+            <div>
+                <span class='name'>{{ envelope.name }}</span>
+                <span class='bal' >{{ envelope.balance | int }}</span>
+            </div>
 
+            <div>
+                <div class='avail'></div><div class='spent'></div>
+            </div>
+
+            <div>Other Stuff</div>
+        </a>
+    {% endfor %}
 
     <div class='txt-center'>
         <a href='purchases'     ><button class='button-grn'>Purchases</button></a>
