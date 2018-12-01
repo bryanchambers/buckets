@@ -40,6 +40,7 @@ body {
 
 input, select {
     width: 100%;
+    box-sizing: border-box;
     margin: 40px 0px;
     padding: 35px 45px;
     font-size:  60px !important;
@@ -61,13 +62,6 @@ button {
     border-radius: 10px;
 }
 
-input {
-    width: 95%;
-}
-
-select {
-    width: 100%
-}
 
 
 .button-grn {
