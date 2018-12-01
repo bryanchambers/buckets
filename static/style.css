@@ -21,8 +21,7 @@ body {
 
 #title {
     text-align: center;
-    padding: 30px;
-    color: #333333;
+    padding: 0px;
     font-size: 90px;
 }
 
@@ -35,8 +34,8 @@ body {
 
 input, select {
     width: 100%;
-    margin: 35px 0px;
-    padding: 40px 40px;
+    margin: 40px 0px;
+    padding: 35px 45px;
     font-size:  60px !important;
     font-family: inherit;
     background: #ededed;
@@ -48,7 +47,7 @@ input, select {
 
 button {
     margin: 30px 15px;
-    padding: 20px 30px;
+    padding: 25px 35px;
     font-size: 50px;
     font-family: inherit;
     background: #e6e6e6;
