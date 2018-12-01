@@ -63,6 +63,7 @@ input, select {
 label {
     padding: 0px;
     margin: 0px 10px;
+    color: #999999;
 }
 
 button {
@@ -71,7 +72,7 @@ button {
     font-size: 50px;
     font-family: inherit;
     background: #e6e6e6;
-    color: inherit;
+    color: #404040;
     border: 1px solid #bfbfbf;
     border-radius: 10px;
 }
