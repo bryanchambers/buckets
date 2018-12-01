@@ -144,35 +144,32 @@ def new_bucket():
 
 @app.route('/buckets/refill')
 def refill():
-    try:
-        buckets = Bucket.query.all()
+    buckets = Bucket.query.all()
 
-        last = None
-        for bucket in buckets:
-            last_refill = bucket.last_refill if bucket.last_refill else datetime.utcnow()
+    last = None
+    for bucket in buckets:
+        last_refill = bucket.last_refill if bucket.last_refill else datetime.utcnow() - timedelta(days=30)
 
-            if last:
-                if last_refill > last: last = last_refill
-            else:
-                last = last_refill
-
-        if not last or last + timedelta(days=7) < datetime.today():		
-            refill_date = last + timedelta(days=7) if last else datetime.today()
-            day = refill_date.weekday()
-            shift = day - 4 if day >= 4 else day + 3
-            refill_date = refill_date - timedelta(days=shift)
-            refill_date = refill_date.replace(hour=18, minute=0, second=0, microsecond=0)
-
-            for bucket in buckets:
-                refill = bucket.refill if bucket.refill else 0
-                bucket.balance = bucket.balance + refill
-                bucket.last_refill = refill_date
-            db.session.commit()
-            return redirect('/')
+        if last:
+            if last_refill > last: last = last_refill
         else:
-            return "It's not time for a refill yet!"
-    except Exception as error:
-        return str(error)
+            last = last_refill
+
+    if not last or last + timedelta(days=7) < datetime.today():		
+        refill_date = last + timedelta(days=7) if last else datetime.today()
+        day = refill_date.weekday()
+        shift = day - 4 if day >= 4 else day + 3
+        refill_date = refill_date - timedelta(days=shift)
+        refill_date = refill_date.replace(hour=18, minute=0, second=0, microsecond=0)
+
+        for bucket in buckets:
+            refill = bucket.refill if bucket.refill else 0
+            bucket.balance = bucket.balance + refill
+            bucket.last_refill = refill_date
+        db.session.commit()
+        return redirect('/')
+    else:
+        return "It's not time for a refill yet!"
 
 
 
