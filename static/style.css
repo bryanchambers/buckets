@@ -88,6 +88,20 @@ button {
 
 
 
+/* --- Home --- */
+
+.bucket {
+    font-size: 60px;
+    color: inherit;
+}
+
+.bucket .bal { float: right; }
+
+
+
+
+
+
 /* --- Purchases --- */
 
 #purchases table {
