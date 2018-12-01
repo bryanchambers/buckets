@@ -3,7 +3,7 @@
 {% block body %}
 
     {% for bucket in buckets %}
-        <a class = 'bucket' href='buckets/{{ bucket.id }}'>
+        <a class = 'bucket' href="buckets/{{ bucket['id'] }}">
             <div>
                 <span class='name'>{{ bucket['name'] }}</span>
                 <span class='bal' >{{ bucket['balance'] }}</span>

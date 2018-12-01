@@ -103,7 +103,7 @@ button {
     border: 1px solid black;
 }
 
-.bucket .avail {
+.bucket .available {
     height: 100%;
     background: blue;
 }
