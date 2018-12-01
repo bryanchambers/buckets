@@ -169,7 +169,7 @@ def refill():
             return redirect('/')
         else:
             return "It's not time for a refill yet!"
-    except as error:
+    except Exception as error:
         return str(error)
 
 
