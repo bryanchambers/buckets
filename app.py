@@ -49,7 +49,7 @@ def home():
             'refill':  bucket.refill,
             'size':    bucket.size,
             'outlook': bucket.balance + bucket.refill,
-            'width':   int((bucket.balance / bucket.size) * 100)
+            'width':   int((bucket.balance / bucket.size) * 100) if bucket.balance > 0 else 0
         })
 
     return render_template('home.html', buckets=buckets, title='Buckets')

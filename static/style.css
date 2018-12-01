@@ -93,10 +93,13 @@ button {
 .bucket {
     margin: 50px 0px;
     font-size: 60px;
-    color: #404040;
+    
 }
 
-.bucket a { text-decoration: none; }
+.bucket a { 
+    text-decoration: none;
+    color: #404040;
+}
 
 .bucket .bar {
     width: 100%;
@@ -113,7 +116,7 @@ button {
 
 .bucket .info {
     margin: 10px 0px;
-    font-size: 35px;
+    font-size: 30px;
     color: #999999;
 }
 
