@@ -41,6 +41,9 @@ body {
 .btm-spacer-lg { margin-bottom: 200px; }
 .btm-spacer-sm { margin-bottom: 120px; }
 
+.floatr { float: right; }
+.floatl { float: left;  }
+
 
 
 

@@ -5,14 +5,15 @@
     {% for bucket in buckets %}
         <div class='bucket'><a href="buckets/{{ bucket['id'] }}">
             <div>
-                <span class='name'>{{ bucket['name'] }}</span>
-                <span class='bal' >{{ bucket['balance'] }}</span>
+                <span>{{ bucket['name'] }}</span>
+                <span class='floatr'>{{ bucket['balance'] }}</span>
             </div>
 
             <div class='bar'><div class='available' style="width: {{ bucket['width'] }}%"></div></div>
 
             <div class='info'>
-                <span>{{ bucket['refill'] }} / {{ bucket['size'] }} --- {{ bucket['outlook'] }}</span>
+                <span>{{ bucket['refill'] }} / {{ bucket['size'] }}</span>
+                <span class='floatr'>{{ bucket['outlook'] }}</span>
             </div>
         </a></div>
     {% endfor %}
