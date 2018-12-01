@@ -149,10 +149,12 @@ def refill():
 
         last = None
         for bucket in buckets:
+            last_refill = bucket.last_refill if bucket.last_refill else datetime.utcnow()
+
             if last:
-                if bucket.last_refill > last: last = bucket.last_refill
+                if last_refill > last: last = last_refill
             else:
-                last = bucket.last_refill
+                last = last_refill
 
         if not last or last + timedelta(days=7) < datetime.today():		
             refill_date = last + timedelta(days=7) if last else datetime.today()
