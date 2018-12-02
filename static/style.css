@@ -14,6 +14,17 @@ body {
     padding: 0px;
 }
 
+#home {
+    position: fixed;
+    left: 30px;
+    top:  30px;
+}
+
+#home img {
+    height:  80px;
+    opacity: 0.4;
+}
+
 #title {
     text-align: center;
     padding:    0px;
@@ -125,7 +136,7 @@ button {
 }
 
 .controls button {
-    width: 150px;
+    width: 300px;
 }
 
 
@@ -183,16 +194,7 @@ button {
 
 
 
-#home {
-    position: fixed;
-    left: 30px;
-	bottom: 30px;
-}
 
-#home img {
-	height: 100px;
-	opacity: 0.5;
-}
 
 
 
