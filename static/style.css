@@ -16,8 +16,8 @@ body {
 
 #home {
     position: fixed;
-    left: 30px;
-    top:  30px;
+    left:   30px;
+    bottom: 60px;
 }
 
 #home img {
@@ -145,30 +145,30 @@ button {
 
 /* --- Purchases --- */
 
-#purchases table {
+#purchases-tbl {
     width:  100%;
     margin: 40px auto;
 }
 
-#purchases tr { border-bottom: 1px solid #cccccc; }
+#purchases-tbl { border-bottom: 1px solid #cccccc; }
 
-#purchases td, th {
+#purchases-tbl td, #purchases-tbl th {
     padding-top:    25px;
     padding-bottom: 25px;
 }
 
-#purchases .amount {
+#purchases-tbl .amount {
     padding-left:  40px;
     padding-right: 40px;
     text-align:    center;
 }
 
-#purchases .date, #purchases .desc {
+#purchases-tbl .date, #purchases-tbl .desc {
     padding-left:  0px;
     padding-right: 0px;
 }
 
-#purchases .date {
+#purchases-tbl .date {
     text-align: right;
 }
 
