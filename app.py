@@ -182,7 +182,7 @@ def refill():
         db.session.commit()
         return redirect('/')
     else:
-        return "It's not time for a refill yet!"
+        return render_template('refill.html')
 
 
 
