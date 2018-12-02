@@ -16,8 +16,8 @@ body {
 
 #home {
     position: fixed;
-    left:   30px;
-    bottom: 60px;
+    left: 30px;
+    top:  30px;
 }
 
 #home img {
