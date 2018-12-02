@@ -84,7 +84,7 @@ button {
 
 .button-grn { background: #7de87d; }
 .button-red { background: #e87d7d; }
-.button-blu { background: #7db3e8; }
+.button-blu { background: #7db3e8; color: #b3b3b3; }
 .button-ylw { background: #e8e87d; }
 
 
@@ -94,7 +94,7 @@ button {
 /* --- Home --- */
 
 .bucket {
-    margin: 50px 0px;
+    margin: 60px 0px;
     font-size: 60px;
     
 }
