@@ -136,7 +136,7 @@ button {
 }
 
 .controls button {
-    width: 300px;
+    width: 350px;
 }
 
 
@@ -155,6 +155,7 @@ button {
 #purchases-tbl td, #purchases-tbl th {
     padding-top:    25px;
     padding-bottom: 25px;
+    border-bottom:  1px solid #cccccc;
 }
 
 #purchases-tbl .amount {
