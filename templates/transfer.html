@@ -6,14 +6,14 @@
         <label>From</label>
         <select name='from'>
             {% for bucket in buckets %}
-                <option value='{{bucket.id}}'>{{ bucket.name }} {{ bucket.balance }}</option>
+                <option value='{{bucket.id}}'>{{ bucket.name }} [{{ bucket.balance }}]</option>
             {% endfor %}
         </select>
 
         <label>To</label>
         <select name='to'>
             {% for bucket in buckets %}
-                <option value='{{ bucket.id }}'>{{ bucket.name }} {{ bucket.balance }}</option>
+                <option value='{{ bucket.id }}'>{{ bucket.name }} [{{ bucket.balance }}]</option>
             {% endfor %}
         </select>
             

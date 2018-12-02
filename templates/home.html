@@ -1,19 +1,20 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+    <div class='btm-spacer-sm'>
+        {% for bucket in buckets %}
+            <div class='bucket'><a href="buckets/{{ bucket['id'] }}">
+                <div>
+                    <span>{{ bucket['name'] }}</span>
+                    <span class='floatr'>{{ bucket['balance'] }}</span>
+                </div>
 
-    {% for bucket in buckets %}
-        <div class='bucket'><a href="buckets/{{ bucket['id'] }}">
-            <div>
-                <span>{{ bucket['name'] }}</span>
-                <span class='floatr'>{{ bucket['balance'] }}</span>
-            </div>
+                <div class='bar'><div class='available' style="width: {{ bucket['width'] }}%"></div></div>
 
-            <div class='bar'><div class='available' style="width: {{ bucket['width'] }}%"></div></div>
-
-            <div class='info'><span>{{ bucket['refill'] }}:{{ bucket['size'] }}</span></div>
-        </a></div>
-    {% endfor %}
+                <div class='info'><span>{{ bucket['refill'] }}:{{ bucket['size'] }}</span></div>
+            </a></div>
+        {% endfor %}
+    </div>
 
     <div class='txt-center'>
         <a href='purchases'     ><button class='button-grn'>Purchases</button></a>
