@@ -176,7 +176,18 @@ button {
 
 #purchases p {
     margin: 100px 10px;
-    color:  #b3b3b3;
+    color:  #999999;
     text-align: center;
     
+}
+
+
+
+
+
+/* --- Refill --- */
+
+#next {
+    font-size:  60px;
+    text-align: center;
 }

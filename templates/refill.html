@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class='txt-center'>{{ next.strftime('%a %b %d') }} {{ next.strftime('%I:%M%p').lower() }}</div>
+    <div id='next'>{{ next.strftime('%a %b %d') }} {{ next.strftime('%I:%M%p').lower() }}</div>
 {% endblock %}
