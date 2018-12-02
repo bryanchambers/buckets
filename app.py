@@ -108,21 +108,22 @@ def bucket(id):
 
 @app.route('/buckets/<int:id>/edit', methods=['GET', 'POST'])
 def edit(id):
-	bucket = Bucket.query.get(id)
-	if 'submit' in request.form:
-		name = request.form['name']
-		size = request.form['size']
-		size = int(size) if size != '' else 100
-		
-		refill = request.form['refill']
-		refill = int(refill) if refill != '' else 0
+    bucket = Bucket.query.get(id)
+    if 'submit' in request.form:
+        name    = request.form['name']
+        size    = request.form['size']
+        refill  = request.form['refill']
+        balance = request.form['bal']
 
-		bucket.name = name
-		bucket.size = size
-		bucket.refill = refill
-		db.session.commit()
-		return redirect('/buckets/' + str(bucket.id))
-	return render_template('edit-bucket.html', bucket=bucket, title='Edit Bucket')
+        bucket.name   = name
+        bucket.size   = int(size) if size != '' else 100
+        bucket.refill = int(refill) if refill != '' else 0
+        if balance != '': bucket.balance = int(balance)
+
+        db.session.commit()
+        return redirect('/buckets/' + str(bucket.id))
+
+    return render_template('edit-bucket.html', bucket=bucket, title='Edit Bucket')
 
 
 

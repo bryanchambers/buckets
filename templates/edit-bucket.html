@@ -11,6 +11,9 @@
         <label>Size</label>
         <input name='size' type='number' min='0' step='1' {% if bucket %} value='{{ bucket.size }}' {% endif %}>
 
+        <label>Balance</label>
+        <input name='bal' type='number' step='1' {% if bucket %} value='{{ bucket.balance }}' {% endif %}>
+
         <div class='txt-center'><button name='submit' type='submit' class='button-grn'>Save</button></div>
     </form>
 {% endblock %}
