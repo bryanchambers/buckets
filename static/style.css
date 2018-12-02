@@ -150,8 +150,6 @@ button {
     margin: 40px auto;
 }
 
-#purchases-tbl { border-bottom: 1px solid #cccccc; }
-
 #purchases-tbl td, #purchases-tbl th {
     padding-top:    25px;
     padding-bottom: 25px;
@@ -164,13 +162,16 @@ button {
     text-align:    center;
 }
 
-#purchases-tbl .date, #purchases-tbl .desc {
+#purchases-tbl .date {
     padding-left:  0px;
     padding-right: 0px;
+    text-align:    right;
 }
 
 #purchases-tbl .date {
-    text-align: right;
+    padding-left:  0px;
+    padding-right: 0px;
+    text-align:    left;
 }
 
 #purchases p {
@@ -179,23 +180,3 @@ button {
     text-align: center;
     
 }
-
-
-
-
-
-
-
-
-
-
-
-/* Old CSS */
-
-
-
-
-
-
-
-
