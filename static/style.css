@@ -156,19 +156,19 @@ button {
     border-bottom:  1px solid #cccccc;
 }
 
+#purchases-tbl .date {
+    padding-left:  0px;
+    padding-right: 0px;
+    text-align:    center;
+}
+
 #purchases-tbl .amount {
     padding-left:  40px;
     padding-right: 40px;
     text-align:    center;
 }
 
-#purchases-tbl .date {
-    padding-left:  0px;
-    padding-right: 0px;
-    text-align:    right;
-}
-
-#purchases-tbl .date {
+#purchases-tbl .desc {
     padding-left:  0px;
     padding-right: 0px;
     text-align:    left;
