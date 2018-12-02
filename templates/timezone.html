@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Buckets</title>
+    <head>
+        <title>Buckets</title>
 
-		<script>
-			function getTimezoneOffset() {
-				var now    = new Date();
-				var offset = now.getTimezoneOffset();
-				
-				document.getElementById('tz-offset').value = offset;
-				document.getElementById('tz-form').submit();
-			}
-		</script>
-	</head>
+        <script>
+            function getTimezoneOffset() {
+                var now    = new Date();
+                var offset = now.getTimezoneOffset();
+                
+                document.getElementById('tz-offset').value = offset;
+                document.getElementById('tz-form').submit();
+            }
+        </script>
+    </head>
 
-	<body onload='getTimezoneOffset()'>
-		<form id='tz-form' action='' method='post'>
-			
-			<input id='tz-offset' name='tz-offset' type='hidden'>
-		</form>
-	</body>
+    <body onload='getTimezoneOffset()'>
+        <form id='tz-form' action='' method='post'>
+            
+            <input id='tz-offset' name='tz-offset' type='hidden'>
+        </form>
+    </body>
 </html>

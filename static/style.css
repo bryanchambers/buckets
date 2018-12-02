@@ -84,7 +84,7 @@ button {
 
 .button-grn { background: #7de87d; }
 .button-red { background: #e87d7d; }
-.button-blu { background: #7db3e8; color: #b3b3b3; }
+.button-blu { background: #7db3e8; color: #262626; }
 .button-ylw { background: #e8e87d; }
 
 
@@ -123,6 +123,11 @@ button {
     font-size: 30px;
     color: #b3b3b3;
 }
+
+.controls button {
+    width: 150px;
+}
+
 
 
 

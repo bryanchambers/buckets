@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel="shortcut icon" type='image/png' href="{{ url_for('static', filename='icon.png') }}">
-		<title>Buckets</title>
-		<!-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'> -->
-		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-		
-	</head>
+    <head>
+        <link rel="shortcut icon" type='image/png' href="{{ url_for('static', filename='icon.png') }}">
+        <title>Buckets</title>
 
-	<body>
-		<div id='wrapper'>
-			<p id='title'>{{ title }}</p>
-			{% block body %}{% endblock %}
-		</div>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+
+    <body>
+        <div id='wrapper'>
+            <p id='title'>{{ title }}</p>
+
+            {% block body %}{% endblock %}
+        </div>
     </body>
+
     <a id='home' href='/'><img src="{{ url_for('static', filename='bucket.svg') }}" alt=""></a>
 </html>
