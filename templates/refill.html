@@ -2,9 +2,10 @@
 
 {% block body %}
     <div id='next'>
-        <p>{{ next.strftime('%A %b %d') }} {{ next.strftime('%I:%M%p').lower() }}</p>
-        <p>{{ days    }}d</p>
-        <p>{{ hours   }}h</p>
-        <p>{{ minutes }}m</p>
-        </div>
+        <p>
+            <span>{{ days }}d</span>
+            <span>{{ hours }}h</span>
+            <span>{{ minutes }}m</span>
+        </p>
+    </div>
 {% endblock %}
