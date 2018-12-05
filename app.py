@@ -162,7 +162,7 @@ def new_bucket():
 @app.route('/buckets/refill')
 def refill():
     buckets = Bucket.query.all()
-    
+
     last = None
     for bucket in buckets:
         last_refill = bucket.last_refill if bucket.last_refill else datetime.utcnow() - timedelta(days=30)
@@ -172,10 +172,11 @@ def refill():
         else:
             last = last_refill
 
-    next_refill = last + timedelta(days=7)
+    next = last + timedelta(days=7)
+    left = next - datetime.utcnow()
 
-    if not last or next_refill < datetime.today():		
-        refill_date = next_refill if last else datetime.today()
+    if not last or next < datetime.utcnow():		
+        refill_date = next if last else datetime.utcnow()
 
         day   = refill_date.weekday()
         shift = day - 4 if day >= 4 else day + 3
@@ -192,7 +193,9 @@ def refill():
         return redirect('/')
 
     else:
-        return render_template('refill.html', title='Next Refill', next=next_refill)
+        h = left.seconds // 3600
+        m = (left.seconds - (h * 3600)) // 60
+        return render_template('refill.html', title='Next Refill', next=next, days=left.days, hours=h, minutes=m)
 
 
 

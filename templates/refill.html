@@ -1,5 +1,10 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div id='next'>{{ next.strftime('%a %b %d') }} {{ next.strftime('%I:%M%p').lower() }}</div>
+    <div id='next'>
+        <p>{{ next.strftime('%A %b %d') }} {{ next.strftime('%I:%M%p').lower() }}</p>
+        <p>{{ days    }}d</p>
+        <p>{{ hours   }}h</p>
+        <p>{{ minutes }}m</p>
+        </div>
 {% endblock %}
