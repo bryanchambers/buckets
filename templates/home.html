@@ -9,7 +9,7 @@
                     <span class='floatr'>{{ bucket['balance'] }}</span>
                 </div>
 
-                <div class='bar'><div class='available' style="width: {{ bucket['width'] }}%"></div></div>
+                <div class='bar'><div class='available' style="width: {{ bucket['width'] }}%; background: hsl({{ bucket['hue'] }}, 80%, 60%);"></div></div>
 
                 <div class='info'><span>{{ bucket['refill'] }}:{{ bucket['size'] }}</span></div>
             </a></div>
