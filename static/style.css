@@ -122,7 +122,10 @@ button {
     background: #e6e6e6;
 }
 
-.bucket .available { height: 100%; }
+.bucket .available { 
+    height: 100%;
+    border-right: 2px solid #b3b3b3;
+}
 
 .bucket .bal { float: right; }
 
