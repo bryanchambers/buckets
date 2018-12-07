@@ -42,7 +42,7 @@ def home():
     buckets = []
 
     for bucket in results:
-        available = int((bucket.balance / bucket.size) * 100) if bucket.balance > 0 else 0
+        available = min(int((bucket.balance / bucket.size) * 100), 100) if bucket.balance > 0 else 0
 
         buckets.append({
             'id':      bucket.id,
@@ -52,7 +52,7 @@ def home():
             'size':    bucket.size,
             'outlook': bucket.balance + bucket.refill,
             'width':   available,
-            'hue':     int(available * 2.4)
+            'hue':     int(available * 2.2
         })
 
     return render_template('home.html', buckets=buckets, title='Buckets')
