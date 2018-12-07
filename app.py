@@ -52,7 +52,7 @@ def home():
             'size':    bucket.size,
             'outlook': bucket.balance + bucket.refill,
             'width':   available,
-            'hue':     int(available * 2.2
+            'hue':     int(available * 2.2)
         })
 
     return render_template('home.html', buckets=buckets, title='Buckets')
