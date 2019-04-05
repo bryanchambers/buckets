@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, timezone
-
+import json
 
 app = Flask(__name__)
 app.debug = True
@@ -15,22 +15,21 @@ db = SQLAlchemy(app)
 
 
 class Bucket(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(50))
-	balance = db.Column(db.Integer)
-	refill = db.Column(db.Integer)
-	last_refill = db.Column(db.DateTime)
-	size = db.Column(db.Integer)
-	purchases = db.relationship('Purchase', backref='bucket')
+    id          = db.Column(db.Integer, primary_key=True)
+    name        = db.Column(db.String(50))
+    balance     = db.Column(db.Integer)
+    refill      = db.Column(db.Integer)
+    last_refill = db.Column(db.DateTime)
+    size        = db.Column(db.Integer)
+    purchases   = db.relationship('Purchase', backref='bucket')
 
 
 class Purchase(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	bucket_id = db.Column(db.Integer, db.ForeignKey('bucket.id'))
-	desc = db.Column(db.String(150))
-	amount = db.Column(db.Integer)
-	date = db.Column(db.DateTime)
-
+    id        = db.Column(db.Integer, primary_key=True)
+    bucket_id = db.Column(db.Integer, db.ForeignKey('bucket.id'))
+    desc      = db.Column(db.String(150))
+    amount    = db.Column(db.Integer)
+    date      = db.Column(db.DateTime)
 
 
 
@@ -55,57 +54,58 @@ def home():
             'hue':     int(available * 2.2)
         })
 
+    backup()
     return render_template('home.html', buckets=buckets, title='Buckets')
 
 
 
 @app.route('/timezone')
 def get_timezone():
-	return render_template('timezone.html')
+    return render_template('timezone.html')
+
 
 
 @app.route('/buckets/<int:id>', methods=['GET', 'POST'])
 def bucket(id):
-	bucket = Bucket.query.get(id)
-	if 'submit' in request.form:
-		amount = int(request.form['amount'])
-		desc   = str(request.form['desc'])
-		day    = str(request.form['day'])
-		time   = str(request.form['time'])
-		offset = int(request.form['tz-offset'])
-		
-		if day == 'today':
-			if time == 'now':
-				timestamp = datetime.utcnow()
-			else:
-				today     = datetime.strftime(datetime.utcnow() - timedelta(minutes=offset), '%Y-%m-%d')
-				timestamp = datetime.strptime(today + '_' + time, '%Y-%m-%d_%H:%M') + timedelta(minutes=offset)
-		else:
-			if time == 'now':
-				timestamp = False
-			else:
-				timestamp = datetime.strptime(day + '_' + time, '%Y-%m-%d_%H:%M') + timedelta(minutes=offset)
+    bucket = Bucket.query.get(id)
+    if 'submit' in request.form:
+        amount = int(request.form['amount'])
+        desc   = str(request.form['desc'])
+        day    = str(request.form['day'])
+        time   = str(request.form['time'])
+        offset = int(request.form['tz-offset'])
+        
+        if day == 'today':
+            if time == 'now':
+                timestamp = datetime.utcnow()
+            else:
+                today     = datetime.strftime(datetime.utcnow() - timedelta(minutes=offset), '%Y-%m-%d')
+                timestamp = datetime.strptime(today + '_' + time, '%Y-%m-%d_%H:%M') + timedelta(minutes=offset)
+        else:
+            if time == 'now':
+                timestamp = False
+            else:
+                timestamp = datetime.strptime(day + '_' + time, '%Y-%m-%d_%H:%M') + timedelta(minutes=offset)
 
-		if timestamp:
-			bucket.balance = bucket.balance - amount
-			
-			purchase  = Purchase(desc=desc, amount=amount, bucket=bucket, date=timestamp)
-			
-			db.session.add(purchase)
-			db.session.commit()
-			return redirect('/')
-	
-	times = [{'display': 'Now', 'value': 'now'}]
-	for h in range(9, 22):
-		hour   = str(h) if h <= 12 else str(h - 12)
-		period =   'am' if h <  12 else 'pm'
-		times.append({
-			'display': hour + period,
-			'value':   str(h).zfill(2) + ':00'
-		})
+        if timestamp:
+            bucket.balance = bucket.balance - amount
+            
+            purchase  = Purchase(desc=desc, amount=amount, bucket=bucket, date=timestamp)
+            
+            db.session.add(purchase)
+            db.session.commit()
+            return redirect('/')
 
-	return render_template('bucket.html', bucket=bucket, title=bucket.name, times=times)
+    times = [{'display': 'Now', 'value': 'now'}]
+    for h in range(9, 22):
+        hour   = str(h) if h <= 12 else str(h - 12)
+        period =   'am' if h <  12 else 'pm'
+        times.append({
+            'display': hour + period,
+            'value':   str(h).zfill(2) + ':00'
+        })
 
+    return render_template('bucket.html', bucket=bucket, title=bucket.name, times=times)
 
 
 
@@ -132,30 +132,35 @@ def edit(id):
 
 @app.route('/buckets/<int:id>/delete')
 def delete(id):
-	bucket = Bucket.query.get(id)
-	db.session.delete(bucket)
-	db.session.commit()
-	return redirect('/')
+    backup()
+    bucket = Bucket.query.get(id)
+
+    db.session.delete(bucket)
+    db.session.commit()
+    return redirect('/')
 
 
 
 @app.route('/buckets/new', methods=['GET', 'POST'])
 def new_bucket():
-	if 'submit' in request.form:
-		name = request.form['name']
-		name = name if name != '' else 'Bucket'
+    if 'submit' in request.form:
+        name = request.form['name']
+        name = name if name != '' else 'Bucket'
 
-		size = request.form['size']
-		size = int(size) if size != '' else 100
+        size = request.form['size']
+        size = int(size) if size != '' else 100
 
-		refill = request.form['refill']
-		refill = int(refill) if refill != '' else 0
+        refill = request.form['refill']
+        refill = int(refill) if refill != '' else 0
 
-		bucket = Bucket(name=name, balance=refill, refill=refill, size=size)
-		db.session.add(bucket)
-		db.session.commit()
-		return redirect('/')
-	return render_template('edit-bucket.html', title='New Bucket')
+        balance = request.form['bal']
+        balance = int(balance) if balance != '' else 0
+
+        bucket = Bucket(name=name, balance=balance, refill=refill, size=size)
+        db.session.add(bucket)
+        db.session.commit()
+        return redirect('/')
+    return render_template('edit-bucket.html', title='New Bucket')
 
 
 
@@ -199,42 +204,67 @@ def refill():
 
 
 
-
-
 @app.route('/purchases', methods=['GET', 'POST'])
 def purchases():
-	if request.form:
-		if 'tz-offset' in request.form:
-			purchases = Purchase.query.order_by(Purchase.date.desc()).limit(100)
-			offset    = int(round(float(request.form['tz-offset']) / 60, 0)) * -1
-		
-			for purchase in purchases:
-				purchase.date = purchase.date + timedelta(hours=offset)
-		
-			return render_template('purchases.html', purchases=purchases, title='Purchases')
-		else:
-			return redirect('/')
-	else:
-		return render_template('timezone.html', url='/purchases')
+    if request.form:
+        if 'tz-offset' in request.form:
+            purchases = Purchase.query.order_by(Purchase.date.desc()).limit(100)
+            offset    = int(round(float(request.form['tz-offset']) / 60, 0)) * -1
+        
+            for purchase in purchases:
+                purchase.date = purchase.date + timedelta(hours=offset)
+        
+            return render_template('purchases.html', purchases=purchases, title='Purchases')
+        else:
+            return redirect('/')
+    else:
+        return render_template('timezone.html', url='/purchases')
 
 
 
 @app.route('/transfer', methods=['GET', 'POST'])
 def transfer():
-	if 'submit' in request.form:
-		from_bucket = Bucket.query.get(int(request.form['from']))
-		to_bucket   = Bucket.query.get(int(request.form['to']))
-		amount      = int(request.form['amount'])
+    if 'submit' in request.form:
+        from_bucket = Bucket.query.get(int(request.form['from']))
+        to_bucket   = Bucket.query.get(int(request.form['to']))
+        amount      = int(request.form['amount'])
 
-		from_bucket.balance = from_bucket.balance - amount
-		to_bucket.balance = to_bucket.balance + amount
-		db.session.commit()
-		return redirect('/')
-	buckets = Bucket.query.all()
-	return render_template('transfer.html', buckets=buckets, title='Transfer')
+        from_bucket.balance = from_bucket.balance - amount
+        to_bucket.balance = to_bucket.balance + amount
+        db.session.commit()
+        return redirect('/')
+    buckets = Bucket.query.all()
+    return render_template('transfer.html', buckets=buckets, title='Transfer')
+
+
+
+def backup():
+    try:
+        with open('backup.json', 'r') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        data = {}
+
+    for bucket_name in data:
+        data[bucket_name]['updated'] = False
+
+    for bucket in Bucket.query.all():
+        if not bucket.name in data:
+            data[bucket.name] = {}
+
+        data[bucket.name]['balance'] = bucket.balance
+        data[bucket.name]['refill']  = bucket.refill
+        data[bucket.name]['size']    = bucket.size
+        data[bucket.name]['updated'] = True
+
+    for bucket_name in data:
+        if not data[bucket_name]['updated']: data[bucket_name]['deleted'] = True
+        del data[bucket_name]['updated']
+
+    with open('backup.json', 'w') as file:
+        json.dump(data, file)
 
 
 
 if __name__ == '__main__':
 	app.run()
-
