@@ -252,6 +252,7 @@ def backup():
     try:
         with open('backup.json', 'r') as file:
             data = json.load(file)
+            file.close()
     except FileNotFoundError:
         data = {}
 
@@ -273,6 +274,7 @@ def backup():
 
     with open('backup.json', 'w') as file:
         json.dump(data, file)
+        file.close()
 
 
 
