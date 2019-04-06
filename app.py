@@ -257,7 +257,7 @@ def backup():
         with open(path, 'r') as file:
             data = json.load(file)
             file.close()
-    except (FileNotFoundError, JSONDecodeError):
+    except (FileNotFoundError, ValueError):
         data = {}
 
     for bucket_name in data:
