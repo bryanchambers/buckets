@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, timezone
 import json
+import os
 
 app = Flask(__name__)
 app.debug = True
@@ -53,7 +54,7 @@ def home():
             'hue':     int(available * 2.2)
         })
 
-    #backup()
+    backup()
     return render_template('home.html', buckets=buckets, title='Buckets')
 
 
@@ -165,8 +166,11 @@ def new_bucket():
 
 @app.route('/buckets/refill')
 def refill():
+    dir  = os.path.dirname(os.path.abspath(__file__))
+    path = dir + '/refill.txt'
+
     try:
-        with open('refill.txt', 'r') as file:
+        with open(path, 'r') as file:
             data = file.read()
             file.close()
     except FileNotFoundError:
@@ -186,9 +190,6 @@ def refill():
     next = last + timedelta(days=7)
     left = next - datetime.utcnow()
 
-    print(next)
-    print(datetime.now())
-    
     if next < datetime.utcnow():
         day   = next.weekday()
         shift = day - 4 if day >= 4 else day + 3
@@ -196,7 +197,7 @@ def refill():
         refill_date = next - timedelta(days=shift)
         refill_date = refill_date.replace(hour=18, minute=0, second=0, microsecond=0)
 
-        with open('refill.txt', 'w') as file:
+        with open(path, 'w') as file:
             file.write(datetime.strftime(refill_date, format))
             file.close()
 
@@ -249,8 +250,11 @@ def transfer():
 
 
 def backup():
+    dir  = os.path.dirname(os.path.abspath(__file__))
+    path = dir + '/backup.json'
+
     try:
-        with open('backup.json', 'r') as file:
+        with open(path, 'r') as file:
             data = json.load(file)
             file.close()
     except FileNotFoundError:
@@ -272,7 +276,7 @@ def backup():
         if not data[bucket_name]['updated']: data[bucket_name]['deleted'] = True
         del data[bucket_name]['updated']
 
-    with open('backup.json', 'w') as file:
+    with open(path, 'w') as file:
         json.dump(data, file)
         file.close()
 
