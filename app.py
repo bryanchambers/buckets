@@ -53,7 +53,7 @@ def home():
             'hue':     int(available * 2.2)
         })
 
-    backup()
+    #backup()
     return render_template('home.html', buckets=buckets, title='Buckets')
 
 
