@@ -1,4 +1,5 @@
 *.db
 *.wsgi
 backup.json
+refill.txt
 .vscode/

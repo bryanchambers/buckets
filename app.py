@@ -19,7 +19,6 @@ class Bucket(db.Model):
     name        = db.Column(db.String(50))
     balance     = db.Column(db.Integer)
     refill      = db.Column(db.Integer)
-    last_refill = db.Column(db.DateTime)
     size        = db.Column(db.Integer)
     purchases   = db.relationship('Purchase', backref='bucket')
 
@@ -166,33 +165,44 @@ def new_bucket():
 
 @app.route('/buckets/refill')
 def refill():
+    try:
+        with open('refill.txt', 'r') as file:
+            data = file.read()
+            file.close()
+    except FileNotFoundError:
+        error = 'Oh no! Could not find last refill date. Aborting refill.'
+        return render_template('refill.html', title='Next Refill', error=error)
+
+    format = '%Y-%m-%d %H:%M:%S'
+    
+    try:
+        last = datetime.strptime(data, format)
+    except ValueError:
+        error = 'Oh no! Error reading refill date. Aborting refill.'
+        return render_template('refill.html', title='Next Refill', error=error)
+
     buckets = Bucket.query.all()
-
-    last = None
-    for bucket in buckets:
-        last_refill = bucket.last_refill if bucket.last_refill else datetime.utcnow() - timedelta(days=30)
-
-        if last: 
-            if last_refill > last: last = last_refill
-        else:
-            last = last_refill
 
     next = last + timedelta(days=7)
     left = next - datetime.utcnow()
 
-    if not last or next < datetime.utcnow():		
-        refill_date = next if last else datetime.utcnow()
-
-        day   = refill_date.weekday()
+    print(next)
+    print(datetime.now())
+    
+    if next < datetime.utcnow():
+        day   = next.weekday()
         shift = day - 4 if day >= 4 else day + 3
 
-        refill_date = refill_date - timedelta(days=shift)
+        refill_date = next - timedelta(days=shift)
         refill_date = refill_date.replace(hour=18, minute=0, second=0, microsecond=0)
+
+        with open('refill.txt', 'w') as file:
+            file.write(datetime.strftime(refill_date, format))
+            file.close()
 
         for bucket in buckets:
             refill = bucket.refill if bucket.refill else 0
             bucket.balance = bucket.balance + refill
-            bucket.last_refill = refill_date
 
         db.session.commit()
         return redirect('/')
@@ -200,7 +210,7 @@ def refill():
     else:
         h = left.seconds // 3600
         m = (left.seconds - (h * 3600)) // 60
-        return render_template('refill.html', title='Next Refill', next=next, days=left.days, hours=h, minutes=m)
+        return render_template('refill.html', title='Next Refill', days=left.days, hours=h, minutes=m)
 
 
 
