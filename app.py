@@ -182,7 +182,7 @@ def refill():
     try:
         last = datetime.strptime(data, format)
     except ValueError as e:
-        error = 'Oh no! Error reading refill date. Aborting refill.\n' + str(e)
+        error = 'Oh no! Error reading refill date. Aborting refill.\n' + data
         return render_template('refill.html', title='Next Refill', error=error)
 
     buckets = Bucket.query.all()
