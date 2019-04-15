@@ -173,16 +173,16 @@ def refill():
         with open(path, 'r') as file:
             data = file.read()
             file.close()
-    except FileNotFoundError:
-        error = 'Oh no! Could not find last refill date. Aborting refill.'
+    except FileNotFoundError as e:
+        error = 'Oh no! Could not find last refill date. Aborting refill.\n' + str(e)
         return render_template('refill.html', title='Next Refill', error=error)
 
     format = '%Y-%m-%d %H:%M:%S'
     
     try:
         last = datetime.strptime(data, format)
-    except ValueError:
-        error = 'Oh no! Error reading refill date. Aborting refill.'
+    except ValueError as e:
+        error = 'Oh no! Error reading refill date. Aborting refill.\n' + str(e)
         return render_template('refill.html', title='Next Refill', error=error)
 
     buckets = Bucket.query.all()
