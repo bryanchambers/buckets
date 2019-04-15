@@ -171,7 +171,7 @@ def refill():
 
     try:
         with open(path, 'r') as file:
-            data = file.read()
+            data = file.read().strip()
             file.close()
     except FileNotFoundError as e:
         error = 'Oh no! Could not find last refill date. Aborting refill. Details: ' + str(e)
@@ -180,7 +180,7 @@ def refill():
     format = '%Y-%m-%d %H:%M:%S'
     
     try:
-        last = datetime.strptime(data, format) if data != 'RESET' else datetime.utcnow()
+        last = datetime.strptime(data, format)
     except ValueError as e:
         error = 'Oh no! Error reading refill date. Aborting refill. Details: ' + str(e)
         return render_template('refill.html', title='Next Refill', error=error)
