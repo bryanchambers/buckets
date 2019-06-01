@@ -282,5 +282,33 @@ def backup():
 
 
 
+@app.route('/backup', methods=['GET'])
+def view_backup():
+    dir  = os.path.dirname(os.path.abspath(__file__))
+    path = dir + '/backup.json'
+
+    try:
+        with open(path, 'r') as file:
+            data = json.load(file)
+            file.close()
+
+    except (FileNotFoundError, ValueError):
+        data = {}
+
+    buckets = []
+
+    for bucket in data:
+        buckets.append({
+            'name':     bucket,
+            'refill':   data[bucket]['refill'],
+            'size':     data[bucket]['size'],
+            'balance':  data[bucket]['balance'],
+            'deleted': 'Yes' if 'deleted' in data[bucket] and data[bucket]['deleted'] else ''
+        })
+
+    return render_template('backup.html', buckets=buckets, title='Backup')
+
+
+
 if __name__ == '__main__':
 	app.run()

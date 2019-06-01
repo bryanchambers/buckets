@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div id='backup'>
+        <table id='backup-table'>
+            <tr>
+                <th>Name</th>
+                <th>Refill</th>
+                <th>Size</th>
+                <th>Balance</th>
+                <th>Deleted</th>
+            </tr>
+
+            {% for bucket in buckets %}
+                <tr>
+                    <td>{{ bucket.name }}</td>
+                    <td>{{ bucket.refill }}</td>
+                    <td>{{ bucket.size }}</td>
+                    <td>{{ bucket.balance }}</td>
+                    <td>{{ bucket.deleted }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
