@@ -8,7 +8,7 @@
                 <th>Refill</th>
                 <th>Size</th>
                 <th>Balance</th>
-                <th>Deleted</th>
+                <th>Del</th>
             </tr>
 
             {% for bucket in buckets %}
@@ -17,9 +17,13 @@
                     <td>{{ bucket.refill }}</td>
                     <td>{{ bucket.size }}</td>
                     <td>{{ bucket.balance }}</td>
-                    <td>{{ bucket.deleted }}</td>
+                    <td style='color: #e87d7d;'>{% if bucket.deleted %}&#9679;{% endif %}</td>
                 </tr>
             {% endfor %}
         </table>
+    </div>
+
+    <div class='txt-center btm-spacer-sm controls'>
+        <a href='restore' ><button class='button-red'>Restore</button></a>
     </div>
 {% endblock %}

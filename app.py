@@ -303,7 +303,7 @@ def view_backup():
             'refill':   data[bucket]['refill'],
             'size':     data[bucket]['size'],
             'balance':  data[bucket]['balance'],
-            'deleted': 'Yes' if 'deleted' in data[bucket] and data[bucket]['deleted'] else ''
+            'deleted':  data[bucket]['deleted'] if 'deleted' in data[bucket] else False
         })
 
     return render_template('backup.html', buckets=buckets, title='Backup')
