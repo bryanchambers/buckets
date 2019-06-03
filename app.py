@@ -273,7 +273,7 @@ def backup():
         data[bucket.name]['updated'] = True
 
     for bucket_name in data:
-        if not data[bucket_name]['updated']: data[bucket_name]['deleted'] = True
+        data[bucket_name]['deleted'] = not data[bucket_name]['updated']
         del data[bucket_name]['updated']
 
     with open(path, 'w') as file:
@@ -307,6 +307,33 @@ def view_backup():
         })
 
     return render_template('backup.html', buckets=buckets, title='Backup')
+
+
+
+@app.route('/restore', methods=['GET'])
+def restore():
+    dir  = os.path.dirname(os.path.abspath(__file__))
+    path = dir + '/backup.json'
+
+    try:
+        with open(path, 'r') as file:
+            data = json.load(file)
+            file.close()
+
+    except (FileNotFoundError, ValueError):
+        data = {}
+
+    for bucket in data:
+        if 'deleted' in data[bucket] and data[bucket]['deleted']:
+            name    = str(bucket)
+            size    = int(data[bucket]['size'])
+            refill  = int(data[bucket]['refill'])
+            balance = int(data[bucket]['balance'])
+            bucket  = Bucket(name=name, balance=balance, refill=refill, size=size)
+            db.session.add(bucket)
+
+    db.session.commit()
+    return redirect('/')
 
 
 
