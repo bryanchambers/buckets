@@ -132,11 +132,11 @@ def edit(id):
 
 @app.route('/buckets/<int:id>/delete')
 def delete(id):
-    backup()
-    bucket = Bucket.query.get(id)
+    #backup()
+    #bucket = Bucket.query.get(id)
 
-    db.session.delete(bucket)
-    db.session.commit()
+    #db.session.delete(bucket)
+    #db.session.commit()
     return redirect('/')
 
 
