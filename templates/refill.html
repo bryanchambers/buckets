@@ -2,8 +2,10 @@
 
 {% block body %}
     <div id='next'>
+
         {% if error is defined and error %}
             <p>{{ error }}</p>
+
         {% else %}
             <p>
                 <span>{{ days }}d</span>
@@ -11,5 +13,6 @@
                 <span>{{ minutes }}m</span>
             </p>
         {% endif %}
+
     </div>
 {% endblock %}

@@ -4,6 +4,7 @@
     <form action='' method='post'>
 
         <label>From</label>
+
         <select name='from'>
             {% for bucket in buckets %}
                 <option value='{{bucket.id}}'>{{ bucket.name }} [{{ bucket.balance }}]</option>
@@ -11,6 +12,7 @@
         </select>
 
         <label>To</label>
+
         <select name='to'>
             {% for bucket in buckets %}
                 <option value='{{ bucket.id }}'>{{ bucket.name }} [{{ bucket.balance }}]</option>
@@ -20,7 +22,9 @@
         <label class='input-label'>Amount</label>
         <input name='amount' type='number' min='1' step='1'>
 
-        <div class='txt-center'><button name='submit' type='submit' value='0' class='button-grn'>Transfer</button></div>
+        <div class='txt-center'>
+            <button name='submit' type='submit' value='0' class='button-grn'>Transfer</button>
+        </div>
 
-    </form>	
+    </form>
 {% endblock %}

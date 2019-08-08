@@ -1,11 +1,13 @@
 <!DOCTYPE html>
+
 <html>
     <head>
-        <link rel="shortcut icon" type='image/png' href="{{ url_for('static', filename='icon.png') }}">
+        <link rel='shortcut icon' type='image/png' href="{{ url_for('static', filename='icon.png') }}">
         <title>Buckets</title>
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel='stylesheet' href="{{ url_for('static', filename='style.css') }}">
     </head>
+
 
     <body>
         <div id='wrapper'>
@@ -14,6 +16,7 @@
             {% block body %}{% endblock %}
         </div>
     </body>
+
 
     <a id='home' href='/'><img src="{{ url_for('static', filename='bucket.svg') }}" alt=""></a>
 </html>

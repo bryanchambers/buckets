@@ -4,14 +4,11 @@
     <form class='btm-spacer-lg' action='' method='post' onload='getTimezoneOffset()'>
 
         <input name='amount' type='number' step='1' required placeholder='Amount'>
-
         <input name='desc' type='text' placeholder='Description'>
 
-        <select id='day' name='day'>
-            <option value='today'>Today</option>
-        </select>
 
 
+        <select id='day' name='day'><option value='today'>Today</option></selet>
 
         <script>
             var date   = new Date();
@@ -36,8 +33,10 @@
                 
                 option.value = year + '-' + month + '-' + day
                 select.appendChild(option);
-                }
+            }
         </script>
+
+
 
         <select id='time' name='time'>
             {% for time in times %}
@@ -45,9 +44,9 @@
             {% endfor %}
         </select>
 
-
-
         <div class='txt-center'><button class='button-grn' name='submit' type='submit'>Spend</button></div>
+
+
 
         <input id='tz-offset' name='tz-offset' type='hidden'>
 
@@ -57,11 +56,12 @@
             
             document.getElementById('tz-offset').value = offset;
         </script>
-
     </form>
 
+
+
     <div class='txt-center btm-spacer-sm'>
-        <a href='{{ bucket.id }}/edit'  ><button class='button-blu'>Edit</button></a>
+        <a href='{{ bucket.id }}/edit' ><button class='button-blu'>Edit</button></a>
         <!-- <a href='{{ bucket.id }}/delete'><button class='button-red'>Delete</button></a> -->
     </div>
 
