@@ -16,12 +16,12 @@ db = SQLAlchemy(app)
 
 
 class Bucket(db.Model):
-    id          = db.Column(db.Integer, primary_key=True)
-    name        = db.Column(db.String(50))
-    balance     = db.Column(db.Integer)
-    refill      = db.Column(db.Integer)
-    size        = db.Column(db.Integer)
-    purchases   = db.relationship('Purchase', backref='bucket')
+    id        = db.Column(db.Integer, primary_key=True)
+    name      = db.Column(db.String(50))
+    balance   = db.Column(db.Integer)
+    refill    = db.Column(db.Integer)
+    size      = db.Column(db.Integer)
+    purchases = db.relationship('Purchase', backref='bucket')
 
 
 class Purchase(db.Model):
@@ -59,47 +59,53 @@ def home():
 
 
 
+
+
 @app.route('/timezone')
 def get_timezone():
     return render_template('timezone.html')
 
 
 
+
+
 @app.route('/buckets/<int:id>', methods=['GET', 'POST'])
 def bucket(id):
     bucket = Bucket.query.get(id)
+
     if 'submit' in request.form:
         amount = int(request.form['amount'])
         desc   = str(request.form['desc'])
         day    = str(request.form['day'])
         time   = str(request.form['time'])
         offset = int(request.form['tz-offset'])
-        
+
         if day == 'today':
             if time == 'now':
                 timestamp = datetime.utcnow()
+
             else:
                 today     = datetime.strftime(datetime.utcnow() - timedelta(minutes=offset), '%Y-%m-%d')
                 timestamp = datetime.strptime(today + '_' + time, '%Y-%m-%d_%H:%M') + timedelta(minutes=offset)
+
         else:
-            if time == 'now':
-                timestamp = False
-            else:
-                timestamp = datetime.strptime(day + '_' + time, '%Y-%m-%d_%H:%M') + timedelta(minutes=offset)
+            if time == 'now': timestamp = False
+            else: timestamp = datetime.strptime(day + '_' + time, '%Y-%m-%d_%H:%M') + timedelta(minutes=offset)
 
         if timestamp:
             bucket.balance = bucket.balance - amount
-            
-            purchase  = Purchase(desc=desc, amount=amount, bucket=bucket, date=timestamp)
-            
+            purchase = Purchase(desc=desc, amount=amount, bucket=bucket, date=timestamp)
+
             db.session.add(purchase)
             db.session.commit()
             return redirect('/')
 
     times = [{'display': 'Now', 'value': 'now'}]
+
     for h in range(9, 22):
         hour   = str(h) if h <= 12 else str(h - 12)
         period =   'am' if h <  12 else 'pm'
+
         times.append({
             'display': hour + period,
             'value':   str(h).zfill(2) + ':00'
@@ -109,9 +115,12 @@ def bucket(id):
 
 
 
+
+
 @app.route('/buckets/<int:id>/edit', methods=['GET', 'POST'])
 def edit(id):
     bucket = Bucket.query.get(id)
+
     if 'submit' in request.form:
         name    = request.form['name']
         size    = request.form['size']
@@ -130,6 +139,8 @@ def edit(id):
 
 
 
+
+
 @app.route('/buckets/<int:id>/delete')
 def delete(id):
     #backup()
@@ -138,6 +149,8 @@ def delete(id):
     #db.session.delete(bucket)
     #db.session.commit()
     return redirect('/')
+
+
 
 
 
@@ -157,10 +170,14 @@ def new_bucket():
         balance = int(balance) if balance != '' else 0
 
         bucket = Bucket(name=name, balance=balance, refill=refill, size=size)
+
         db.session.add(bucket)
         db.session.commit()
         return redirect('/')
+
     return render_template('edit-bucket.html', title='New Bucket')
+
+
 
 
 
@@ -173,14 +190,15 @@ def refill():
         with open(path, 'r') as file:
             data = file.read().strip()
             file.close()
+
     except FileNotFoundError as e:
         error = 'Oh no! Could not find last refill date. Aborting refill. Details: ' + str(e)
         return render_template('refill.html', title='Next Refill', error=error)
 
     format = '%Y-%m-%d %H:%M:%S'
-    
-    try:
-        last = datetime.strptime(data, format)
+
+    try: last = datetime.strptime(data, format)
+
     except ValueError as e:
         error = 'Oh no! Error reading refill date. Aborting refill. Details: ' + str(e)
         return render_template('refill.html', title='Next Refill', error=error)
@@ -215,21 +233,25 @@ def refill():
 
 
 
+
+
 @app.route('/purchases', methods=['GET', 'POST'])
 def purchases():
     if request.form:
         if 'tz-offset' in request.form:
             purchases = Purchase.query.order_by(Purchase.date.desc()).limit(100)
             offset    = int(round(float(request.form['tz-offset']) / 60, 0)) * -1
-        
+
             for purchase in purchases:
                 purchase.date = purchase.date + timedelta(hours=offset)
-        
+
             return render_template('purchases.html', purchases=purchases, title='Purchases')
-        else:
-            return redirect('/')
-    else:
-        return render_template('timezone.html', url='/purchases')
+
+        else: return redirect('/')
+
+    else: return render_template('timezone.html', url='/purchases')
+
+
 
 
 
@@ -241,11 +263,15 @@ def transfer():
         amount      = int(request.form['amount'])
 
         from_bucket.balance = from_bucket.balance - amount
-        to_bucket.balance = to_bucket.balance + amount
+        to_bucket.balance   = to_bucket.balance   + amount
+
         db.session.commit()
         return redirect('/')
+
     buckets = Bucket.query.all()
     return render_template('transfer.html', buckets=buckets, title='Transfer')
+
+
 
 
 
@@ -257,15 +283,14 @@ def backup():
         with open(path, 'r') as file:
             data = json.load(file)
             file.close()
-    except (FileNotFoundError, ValueError):
-        data = {}
+
+    except (FileNotFoundError, ValueError): data = {}
 
     for bucket_name in data:
         data[bucket_name]['updated'] = False
 
     for bucket in Bucket.query.all():
-        if not bucket.name in data:
-            data[bucket.name] = {}
+        if not bucket.name in data: data[bucket.name] = {}
 
         data[bucket.name]['balance'] = bucket.balance
         data[bucket.name]['refill']  = bucket.refill
@@ -282,5 +307,7 @@ def backup():
 
 
 
+
+
 if __name__ == '__main__':
-	app.run()
+    app.run()
