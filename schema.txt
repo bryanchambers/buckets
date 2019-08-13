@@ -1,3 +1,9 @@
+CREATE TABLE user(
+    id       INTEGER PRIMARY KEY,
+    username TEXT,
+    password TEXT
+);
+
 CREATE TABLE bucket(
     id      INTEGER PRIMARY KEY, 
     name    TEXT,

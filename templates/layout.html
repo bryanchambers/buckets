@@ -14,6 +14,8 @@
             <p id='title'>{{ title }}</p>
 
             {% block body %}{% endblock %}
+
+            <p id='user'>{% if 'user' in session %} {{ session['user']['username'] }} {% endif %}</p>
         </div>
     </body>
 

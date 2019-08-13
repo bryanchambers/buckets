@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, timezone
+from passlib import hash
 import json
 import os
 
 app = Flask(__name__)
+app.secret_key = 'XnD8dR0fwqSprw1BbU4MOyISBuen3fEK3Jc2'
+
 app.debug = True
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////var/www/buckets/database.db'
@@ -13,6 +16,12 @@ db = SQLAlchemy(app)
 
 
 
+
+
+class User(db.Model):
+    id       = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100))
+    password = db.Column(db.String(100))
 
 
 class Bucket(db.Model):
@@ -30,6 +39,25 @@ class Purchase(db.Model):
     desc      = db.Column(db.String(150))
     amount    = db.Column(db.Integer)
     date      = db.Column(db.DateTime)
+
+
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if 'submit' in request.form:
+        username = request.form['username']
+        password = request.form['password']
+
+        user = User.query.filter_by(username=username).first()
+
+        if user and user.password:
+            if hash.pbkdf2_sha256.verify(password, user.password):
+                session['user'] = { 'id': user.id, 'username': user.username }
+                return redirect('/')
+
+    return render_template('login.html', title='Login')
 
 
 
