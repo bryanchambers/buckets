@@ -44,6 +44,26 @@ class Purchase(db.Model):
 
 
 
+@app.before_request
+def check_auth():
+    valid = False
+    login = request.endpoint == 'login'
+
+    if 'user' in session and not login:
+        if 'id' in session['user'] and 'username' in session['user']:
+            id   = int(session['user']['id'])
+            user = User.query.get(id)
+
+            if user and user.username == session['user']['username']:
+                valid = True
+
+    if not valid and not login:
+        return redirect('/login')
+
+
+
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if 'submit' in request.form:
@@ -54,10 +74,21 @@ def login():
 
         if user and user.password:
             if hash.pbkdf2_sha256.verify(password, user.password):
-                session['user'] = { 'id': user.id, 'username': user.username }
+                session['user']   = { 'id': user.id, 'username': user.username }
+                session.permanent = True
                 return redirect('/')
 
     return render_template('login.html', title='Login')
+
+
+
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user')
+    session.permanent = False
+    return redirect('/login')
 
 
 
