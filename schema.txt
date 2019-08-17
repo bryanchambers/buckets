@@ -1,21 +1,7 @@
-CREATE TABLE user(
-    id       INTEGER PRIMARY KEY,
-    username TEXT,
-    password TEXT
-);
+CREATE TABLE user(id INTEGER PRIMARY KEY, group_id INTEGER, username TEXT, password TEXT);
 
-CREATE TABLE bucket(
-    id      INTEGER PRIMARY KEY, 
-    name    TEXT,
-    balance INTEGER,
-    refill  INTEGER,
-    size    INTEGER
-);
+CREATE TABLE pod(id INTEGER PRIMARY KEY, name TEXT);
 
-CREATE TABLE purchase(
-    id        INTEGER PRIMARY KEY,
-    bucket_id INTEGER,
-    desc      TEXT,
-    amount    INTEGER,
-    date      INTEGER
-);
+CREATE TABLE bucket(id INTEGER PRIMARY KEY, name TEXT, balance INTEGER, refill INTEGER, size INTEGER);
+
+CREATE TABLE purchase(id INTEGER PRIMARY KEY, bucket_id INTEGER, desc TEXT, amount INTEGER, date INTEGER);

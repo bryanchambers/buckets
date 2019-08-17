@@ -32,10 +32,10 @@
         <a href='buckets/new'   ><button class='button-blu'>New</button></a>
     </div>
 
-    <p id='user'>{% if 'user' in session %} {{ session['user']['username'] }} {% endif %}</p>
+    <p id='user'>{% if 'user' in session %} {{ session['user']['group']['name'] }} > {{ session['user']['username'] }} {% endif %}</p>
 
     <div class='txt-center btm-spacer-sm controls'>
-        <a href='logout'><button class='button-red'>Logout</button></a>
+        <a href='logout'><button class='button-gry'>Logout</button></a>
     </div>
 
 {% endblock %}

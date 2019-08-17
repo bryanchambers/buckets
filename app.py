@@ -20,8 +20,15 @@ db = SQLAlchemy(app)
 
 class User(db.Model):
     id       = db.Column(db.Integer, primary_key=True)
+    pod_id   = db.Column(db.Integer, db.ForeignKey('pod.id'))
     username = db.Column(db.String(100))
     password = db.Column(db.String(100))
+
+
+class Pod(db.Model):
+    id    = db.Column(db.Integer, primary_key=True)
+    name  = db.Column(db.String(50))
+    users = db.relationship('User', backref='pod')
 
 
 class Bucket(db.Model):
@@ -46,8 +53,9 @@ class Purchase(db.Model):
 
 @app.before_request
 def check_auth():
-    valid = False
-    login = request.endpoint == 'login'
+    valid  = False
+    login  = request.endpoint == 'login'
+    static = request.endpoint == 'static'
 
     if 'user' in session and not login:
         if 'id' in session['user'] and 'username' in session['user']:
@@ -55,9 +63,13 @@ def check_auth():
             user = User.query.get(id)
 
             if user and user.username == session['user']['username']:
-                valid = True
+                id  = int(session['user']['group']['id'])
+                pod = Pod.query.get(id)
 
-    if not valid and not login:
+                if pod and pod.name == session['user']['group']['name']:
+                    valid = True
+
+    if not valid and not login and not static:
         return redirect('/login')
 
 
@@ -72,12 +84,17 @@ def login():
 
         user = User.query.filter_by(username=username).first()
 
-        if user and user.password:
+        if user and user.password and user.pod:
             if hash.pbkdf2_sha256.verify(password, user.password):
-                session['user']   = { 'id': user.id, 'username': user.username }
+                group = { 'id': user.pod.id, 'name': user.pod.name }
+
+                session['user'] = { 'id': user.id, 'username': user.username, 'group': group }
+
                 session.permanent = True
                 return redirect('/')
 
+    session.permanent = False
+    if 'user' in session: session.pop('user')
     return render_template('login.html', title='Login')
 
 
