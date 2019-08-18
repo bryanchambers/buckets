@@ -35,7 +35,10 @@
     <p id='user'>{% if 'user' in session %} {{ session['user']['group']['name'] }} > {{ session['user']['username'] }} {% endif %}</p>
 
     <div class='txt-center btm-spacer-sm controls'>
-        <a href='logout'><button class='button-gry'>Logout</button></a>
+        <a href='logout'><button class='button-gry' style='width: 700px'>Logout</button></a>
+        <a href='password'><button class='button-gry' style='width: 700px'>Change Password</button></a>
+        <a href='username'><button class='button-gry' style='width: 700px'>Edit Username</button></a>
+        <a href='group'><button class='button-gry' style='width: 700px'>Edit Group Name</button></a>
     </div>
 
 {% endblock %}

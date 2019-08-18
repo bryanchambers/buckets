@@ -111,6 +111,64 @@ def logout():
 
 
 
+@app.route('/password', methods=['GET', 'POST'])
+def change_password():
+    if 'submit' in request.form:
+        current_pw = request.form['current']
+        new_pw     = request.form['new']
+
+        user = User.query.get(int(session['user']['id']))
+
+        if user and user.password and current_pw and new_pw:
+            if hash.pbkdf2_sha256.verify(current_pw, user.password):
+                user.password = hash.pbkdf2_sha256.hash(new_pw)
+                db.session.commit()
+                return redirect('/')
+
+    return render_template('password.html', title='Change Password')
+
+
+
+
+
+@app.route('/username', methods=['GET', 'POST'])
+def change_username():
+    if 'submit' in request.form:
+        username = request.form['name']
+
+        user = User.query.get(int(session['user']['id']))
+
+        if user and username:
+            user.username = username
+            db.session.commit()
+
+            session['user']['username'] = username
+            return redirect('/')
+
+    return render_template('name.html', title='Edit Username')
+
+
+
+
+
+@app.route('/group', methods=['GET', 'POST'])
+def change_group_name():
+    if 'submit' in request.form:
+        group_name = request.form['name']
+
+        user = User.query.get(int(session['user']['id']))
+
+        if user and group_name:
+            user.pod.name = group_name
+            db.session.commit()
+            return redirect('/')
+
+    return render_template('name.html', title='Edit Group Name')
+
+
+
+
+
 @app.route('/')
 def home():
     results = Bucket.query.all()
