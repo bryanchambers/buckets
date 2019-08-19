@@ -1,4 +1,4 @@
-CREATE TABLE user(id INTEGER PRIMARY KEY, group_id INTEGER, username TEXT, password TEXT);
+CREATE TABLE user(id INTEGER PRIMARY KEY, pod_id INTEGER, username TEXT, password TEXT);
 
 CREATE TABLE pod(id INTEGER PRIMARY KEY, name TEXT);
 
