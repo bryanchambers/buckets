@@ -133,10 +133,10 @@ def change_password():
 
 @app.route('/username', methods=['GET', 'POST'])
 def change_username():
+    user = User.query.get(int(session['user']['id']))
+
     if 'submit' in request.form:
         username = request.form['name']
-
-        user = User.query.get(int(session['user']['id']))
 
         if user and username:
             user.username = username
@@ -145,7 +145,7 @@ def change_username():
             session['user']['username'] = username
             return redirect('/')
 
-    return render_template('name.html', title='Edit Username')
+    return render_template('name.html', title='Edit Username', name=user.username)
 
 
 
@@ -153,17 +153,19 @@ def change_username():
 
 @app.route('/group', methods=['GET', 'POST'])
 def change_group_name():
+    user = User.query.get(int(session['user']['id']))
+
     if 'submit' in request.form:
         group_name = request.form['name']
-
-        user = User.query.get(int(session['user']['id']))
 
         if user and group_name:
             user.pod.name = group_name
             db.session.commit()
+
+            session['user']['group']['name'] = group_name
             return redirect('/')
 
-    return render_template('name.html', title='Edit Group Name')
+    return render_template('name.html', title='Edit Group Name', name=user.pod.name)
 
 
 
