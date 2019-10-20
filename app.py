@@ -26,13 +26,16 @@ class User(db.Model):
 
 
 class Pod(db.Model):
-    id    = db.Column(db.Integer, primary_key=True)
-    name  = db.Column(db.String(50))
-    users = db.relationship('User', backref='pod')
+    id      = db.Column(db.Integer, primary_key=True)
+    name    = db.Column(db.String(50))
+    users   = db.relationship('User', backref='pod')
+    buckets = db.relationship('Bucket', backref='pod')
+    refill  = db.Column(db.DateTime)
 
 
 class Bucket(db.Model):
     id        = db.Column(db.Integer, primary_key=True)
+    pod_id    = db.Column(db.Integer, db.ForeignKey('pod.id'))
     name      = db.Column(db.String(50))
     balance   = db.Column(db.Integer)
     refill    = db.Column(db.Integer)
@@ -86,8 +89,8 @@ def login():
 
         if user and user.password and user.pod:
             if hash.pbkdf2_sha256.verify(password, user.password):
-                group = { 'id': user.pod.id, 'name': user.pod.name }
 
+                group = { 'id': user.pod.id, 'name': user.pod.name }
                 session['user'] = { 'id': user.id, 'username': user.username, 'group': group }
 
                 session.permanent = True
@@ -173,7 +176,8 @@ def change_group_name():
 
 @app.route('/')
 def home():
-    results = Bucket.query.all()
+    pod_id  = int(session['user']['group']['id'])
+    results = Bucket.query.filter_by(pod_id=pod_id).all()
     buckets = []
 
     for bucket in results:
@@ -190,7 +194,6 @@ def home():
             'hue':     int(available * 2.2)
         })
 
-    backup()
     return render_template('home.html', buckets=buckets, title='Buckets')
 
 
@@ -305,7 +308,8 @@ def new_bucket():
         balance = request.form['bal']
         balance = int(balance) if balance != '' else 0
 
-        bucket = Bucket(name=name, balance=balance, refill=refill, size=size)
+        pod_id = int(session['user']['group']['id'])
+        bucket = Bucket(pod_id=pod_id, name=name, balance=balance, refill=refill, size=size)
 
         db.session.add(bucket)
         db.session.commit()
@@ -319,41 +323,23 @@ def new_bucket():
 
 @app.route('/buckets/refill')
 def refill():
-    dir  = os.path.dirname(os.path.abspath(__file__))
-    path = dir + '/refill.txt'
+    pod_id = int(session['user']['group']['id'])
+    pod = Pod.query.get(pod_id)
 
-    try:
-        with open(path, 'r') as file:
-            data = file.read().strip()
-            file.close()
+    next = pod.refill + timedelta(days=7) if pod.refill else None
 
-    except FileNotFoundError as e:
-        error = 'Oh no! Could not find last refill date. Aborting refill. Details: ' + str(e)
-        return render_template('refill.html', title='Next Refill', error=error)
+    buckets = Bucket.query.filter_by(pod_id=pod_id).all()
 
-    format = '%Y-%m-%d %H:%M:%S'
+    if not next or next < datetime.utcnow():
+        if not next: next = datetime.utcnow()
 
-    try: last = datetime.strptime(data, format)
-
-    except ValueError as e:
-        error = 'Oh no! Error reading refill date. Aborting refill. Details: ' + str(e)
-        return render_template('refill.html', title='Next Refill', error=error)
-
-    buckets = Bucket.query.all()
-
-    next = last + timedelta(days=7)
-    left = next - datetime.utcnow()
-
-    if next < datetime.utcnow():
         day   = next.weekday()
-        shift = day - 4 if day >= 4 else day + 3
+        shift = day - 4 if day > 3 else day + 3
 
-        refill_date = next - timedelta(days=shift)
-        refill_date = refill_date.replace(hour=18, minute=0, second=0, microsecond=0)
+        synced = next - timedelta(days=shift)
+        synced = synced.replace(hour=18, minute=0, second=0, microsecond=0)
 
-        with open(path, 'w') as file:
-            file.write(datetime.strftime(refill_date, format))
-            file.close()
+        pod.refill = synced
 
         for bucket in buckets:
             refill = bucket.refill if bucket.refill else 0
@@ -363,9 +349,10 @@ def refill():
         return redirect('/')
 
     else:
-        h = left.seconds // 3600
-        m = (left.seconds - (h * 3600)) // 60
-        return render_template('refill.html', title='Next Refill', days=left.days, hours=h, minutes=m)
+        left    = next - datetime.utcnow()
+        hours   = left.seconds // 3600
+        minutes = (left.seconds - (hours * 3600)) // 60
+        return render_template('refill.html', title='Next Refill', days=left.days, hours=hours, minutes=minutes)
 
 
 
@@ -375,7 +362,8 @@ def refill():
 def purchases():
     if request.form:
         if 'tz-offset' in request.form:
-            purchases = Purchase.query.order_by(Purchase.date.desc()).limit(100)
+            pod_id    = int(session['user']['group']['id'])
+            purchases = Purchase.query.filter_by(pod_id=pod_id).order_by(Purchase.date.desc()).limit(100)
             offset    = int(round(float(request.form['tz-offset']) / 60, 0)) * -1
 
             for purchase in purchases:
@@ -404,42 +392,8 @@ def transfer():
         db.session.commit()
         return redirect('/')
 
-    buckets = Bucket.query.all()
+    buckets = Bucket.query.filter_by(pod_id=int(session['user']['group']['id'])).all()
     return render_template('transfer.html', buckets=buckets, title='Transfer')
-
-
-
-
-
-def backup():
-    dir  = os.path.dirname(os.path.abspath(__file__))
-    path = dir + '/backup.json'
-
-    try:
-        with open(path, 'r') as file:
-            data = json.load(file)
-            file.close()
-
-    except (FileNotFoundError, ValueError): data = {}
-
-    for bucket_name in data:
-        data[bucket_name]['updated'] = False
-
-    for bucket in Bucket.query.all():
-        if not bucket.name in data: data[bucket.name] = {}
-
-        data[bucket.name]['balance'] = bucket.balance
-        data[bucket.name]['refill']  = bucket.refill
-        data[bucket.name]['size']    = bucket.size
-        data[bucket.name]['updated'] = True
-
-    for bucket_name in data:
-        data[bucket_name]['deleted'] = not data[bucket_name]['updated']
-        del data[bucket_name]['updated']
-
-    with open(path, 'w') as file:
-        json.dump(data, file)
-        file.close()
 
 
 
