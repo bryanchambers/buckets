@@ -363,7 +363,7 @@ def purchases():
     if request.form:
         if 'tz-offset' in request.form:
             pod_id    = int(session['user']['group']['id'])
-            purchases = Purchase.query.filter_by(pod_id=pod_id).order_by(Purchase.date.desc()).limit(100)
+            purchases = Purchase.query.filter(Purchase.bucket.has(pod_id=pod_id)).order_by(Purchase.date.desc()).limit(100)
             offset    = int(round(float(request.form['tz-offset']) / 60, 0)) * -1
 
             for purchase in purchases:
